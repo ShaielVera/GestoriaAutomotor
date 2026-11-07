@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Archivos con contraseñas: no se suben a GitHub
+/Backend/appsettings.json
+.env
