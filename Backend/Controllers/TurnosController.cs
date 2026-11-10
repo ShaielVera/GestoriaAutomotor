@@ -30,8 +30,11 @@ namespace Backend.Controllers
                 .Include(t => t.Tramite)
                 .ThenInclude(tr => tr.Vehiculo)
                 .Include(t => t.Empleado)
-                .Where(t => t.Estado.ToUpper().Contains(filtro))
-                .OrderBy(t => t.Fecha)
+				.Where(t => t.Estado.ToUpper().Contains(filtro) ||
+							t.Empleado.Nombre.ToUpper().Contains(filtro) ||
+							t.Empleado.Apellido.ToUpper().Contains(filtro) ||
+							t.Tramite.Vehiculo.Patente.ToUpper().Contains(filtro))
+				.OrderBy(t => t.Fecha)
                 .ThenBy(t => t.Hora)
                 .ToListAsync();
         }

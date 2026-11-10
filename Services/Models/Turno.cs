@@ -18,5 +18,7 @@ namespace Services.Models
         public Empleado? Empleado { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        public override string ToString() => $"{Fecha:dd/MM/yyyy} {Hora:HH:mm} - {Tramite}";
     }
 }
