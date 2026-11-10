@@ -1,47 +1,59 @@
 using Backend.Data;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace Backend
+internal class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+
+        builder.Services.AddControllers();
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+        var cadenaConexion = configuration.GetConnectionString("postgresRemote");
+
+        //guardamos el historial de migraciones en el esquema gestoria, separado del inventario
+        builder.Services.AddDbContext<GestoriaContext>(
+            options => options.UseNpgsql(cadenaConexion,
+                npgsql => npgsql.MigrationsHistoryTable("__EFMigrationsHistory", "gestoria")));
+
+        // Configurar una política de CORS
+        builder.Services.AddCors(options =>
         {
-            var builder = WebApplication.CreateBuilder(args);
+            options.AddPolicy("AllowSpecificOrigins",
+                builder => builder
+                    .WithOrigins("http://localhost:5173", "http://localhost:5500", "https://localhost:7000", "https://localhost:5108", "http://sitioweb.com.ar")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+        });
 
-            // Add services to the container.
+        var app = builder.Build();
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables()
-                .Build();
-
-            var cadenaConexion = configuration.GetConnectionString("postgresRemote");
-
-            //guardamos el historial de migraciones en el esquema gestoria, separado del inventario
-            builder.Services.AddDbContext<GestoriaContext>(
-                options => options.UseNpgsql(cadenaConexion,
-                    npgsql => npgsql.MigrationsHistoryTable("__EFMigrationsHistory", "gestoria")));
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-
-            app.Run();
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
+
+        app.UseCors("AllowSpecificOrigins");
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
 }
