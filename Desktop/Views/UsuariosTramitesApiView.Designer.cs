@@ -1,6 +1,6 @@
 ﻿namespace Desktop.Views
 {
-    partial class ClientesTramitesApiView
+    partial class UsuariosTramitesApiView
     {
         /// <summary>
         /// Required designer variable.
@@ -35,21 +35,21 @@
             btnEliminar = new Button();
             btnModificar = new Button();
             btnNuevo = new Button();
-            dataGridClientesTramites = new DataGridView();
+            dataGridUsuariosTramites = new DataGridView();
             checkEliminado = new CheckBox();
             txtBusqueda = new TextBox();
             tabPageAgregarEditar = new TabPage();
             btnCancelar = new Button();
             btnGuardar = new Button();
-            comboClientes = new ComboBox();
+            comboUsuarios = new ComboBox();
             comboTramites = new ComboBox();
-            comboRolCliente = new ComboBox();
+            comboRolUsuario = new ComboBox();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             tabControl1.SuspendLayout();
             tabPageLista.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridClientesTramites).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridUsuariosTramites).BeginInit();
             tabPageAgregarEditar.SuspendLayout();
             SuspendLayout();
             // 
@@ -71,7 +71,7 @@
             tabPageLista.Controls.Add(btnEliminar);
             tabPageLista.Controls.Add(btnModificar);
             tabPageLista.Controls.Add(btnNuevo);
-            tabPageLista.Controls.Add(dataGridClientesTramites);
+            tabPageLista.Controls.Add(dataGridUsuariosTramites);
             tabPageLista.Controls.Add(checkEliminado);
             tabPageLista.Controls.Add(txtBusqueda);
             tabPageLista.Location = new Point(4, 24);
@@ -133,17 +133,17 @@
             btnNuevo.UseVisualStyleBackColor = true;
             btnNuevo.Click += btnNuevo_Click;
             // 
-            // dataGridClientesTramites
+            // dataGridUsuariosTramites
             // 
-            dataGridClientesTramites.AllowUserToAddRows = false;
-            dataGridClientesTramites.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridClientesTramites.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridClientesTramites.Location = new Point(70, 137);
-            dataGridClientesTramites.Name = "dataGridClientesTramites";
-            dataGridClientesTramites.ReadOnly = true;
-            dataGridClientesTramites.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridClientesTramites.Size = new Size(550, 265);
-            dataGridClientesTramites.TabIndex = 2;
+            dataGridUsuariosTramites.AllowUserToAddRows = false;
+            dataGridUsuariosTramites.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridUsuariosTramites.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridUsuariosTramites.Location = new Point(70, 137);
+            dataGridUsuariosTramites.Name = "dataGridUsuariosTramites";
+            dataGridUsuariosTramites.ReadOnly = true;
+            dataGridUsuariosTramites.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridUsuariosTramites.Size = new Size(550, 265);
+            dataGridUsuariosTramites.TabIndex = 2;
             // 
             // checkEliminado
             // 
@@ -168,9 +168,9 @@
             // 
             tabPageAgregarEditar.Controls.Add(btnCancelar);
             tabPageAgregarEditar.Controls.Add(btnGuardar);
-            tabPageAgregarEditar.Controls.Add(comboClientes);
+            tabPageAgregarEditar.Controls.Add(comboUsuarios);
             tabPageAgregarEditar.Controls.Add(comboTramites);
-            tabPageAgregarEditar.Controls.Add(comboRolCliente);
+            tabPageAgregarEditar.Controls.Add(comboRolUsuario);
             tabPageAgregarEditar.Controls.Add(label3);
             tabPageAgregarEditar.Controls.Add(label2);
             tabPageAgregarEditar.Controls.Add(label1);
@@ -202,15 +202,15 @@
             btnGuardar.UseVisualStyleBackColor = true;
             btnGuardar.Click += btnGuardar_Click;
             // 
-            // comboRolCliente
+            // comboRolUsuario
             // 
-            comboRolCliente.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboRolCliente.FormattingEnabled = true;
-            comboRolCliente.Items.AddRange(new object[] { "Titular", "Comprador", "Vendedor", "Solicitante" });
-            comboRolCliente.Location = new Point(184, 160);
-            comboRolCliente.Name = "comboRolCliente";
-            comboRolCliente.Size = new Size(445, 23);
-            comboRolCliente.TabIndex = 5;
+            comboRolUsuario.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboRolUsuario.FormattingEnabled = true;
+            comboRolUsuario.Items.AddRange(new object[] { "Titular", "Comprador", "Vendedor", "Solicitante" });
+            comboRolUsuario.Location = new Point(184, 160);
+            comboRolUsuario.Name = "comboRolUsuario";
+            comboRolUsuario.Size = new Size(445, 23);
+            comboRolUsuario.TabIndex = 5;
             // 
             // comboTramites
             // 
@@ -221,14 +221,14 @@
             comboTramites.Size = new Size(445, 23);
             comboTramites.TabIndex = 4;
             // 
-            // comboClientes
+            // comboUsuarios
             // 
-            comboClientes.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboClientes.FormattingEnabled = true;
-            comboClientes.Location = new Point(184, 40);
-            comboClientes.Name = "comboClientes";
-            comboClientes.Size = new Size(445, 23);
-            comboClientes.TabIndex = 3;
+            comboUsuarios.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboUsuarios.FormattingEnabled = true;
+            comboUsuarios.Location = new Point(184, 40);
+            comboUsuarios.Name = "comboUsuarios";
+            comboUsuarios.Size = new Size(445, 23);
+            comboUsuarios.TabIndex = 3;
             //
             // label3
             //
@@ -258,20 +258,20 @@
             label1.Name = "label1";
             label1.Size = new Size(80, 21);
             label1.TabIndex = 0;
-            label1.Text = "Cliente:";
+            label1.Text = "Usuario:";
             // 
-            // ClientesTramitesApiView
+            // UsuariosTramitesApiView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(tabControl1);
-            Name = "ClientesTramitesApiView";
-            Text = "Clientes por trámite";
+            Name = "UsuariosTramitesApiView";
+            Text = "Usuarios por trámite";
             tabControl1.ResumeLayout(false);
             tabPageLista.ResumeLayout(false);
             tabPageLista.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridClientesTramites).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridUsuariosTramites).EndInit();
             tabPageAgregarEditar.ResumeLayout(false);
             tabPageAgregarEditar.PerformLayout();
             ResumeLayout(false);
@@ -285,14 +285,14 @@
         private TextBox txtBusqueda;
         private Button btnModificar;
         private Button btnNuevo;
-        private DataGridView dataGridClientesTramites;
+        private DataGridView dataGridUsuariosTramites;
         private CheckBox checkEliminado;
         private Button btnBuscar;
         private Button btnRestaurar;
         private Button btnEliminar;
-        private ComboBox comboClientes;
+        private ComboBox comboUsuarios;
         private ComboBox comboTramites;
-        private ComboBox comboRolCliente;
+        private ComboBox comboRolUsuario;
         private Label label3;
         private Label label2;
         private Label label1;

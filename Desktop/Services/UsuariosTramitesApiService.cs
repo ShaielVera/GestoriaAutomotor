@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 
 namespace Desktop.Services
 {
-    public class ClientesTramitesApiService
+    public class UsuariosTramitesApiService
     {
         HttpClient httpClient;
         JsonSerializerOptions options;
-        public ClientesTramitesApiService()
+        public UsuariosTramitesApiService()
         {
             httpClient = SettingHttpClient();
             options = SettingJsonSerializer();
         }
-        public async Task<List<ClienteTramite>?> GetAllAsync()
+        public async Task<List<UsuarioTramite>?> GetAllAsync()
         {
             try
             {
@@ -30,24 +30,24 @@ namespace Desktop.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var clientesTramites = JsonSerializer.Deserialize<List<ClienteTramite>>(json, options);
-                    return clientesTramites;
+                    var usuariosTramites = JsonSerializer.Deserialize<List<UsuarioTramite>>(json, options);
+                    return usuariosTramites;
                 }
                 else
                 {
-                    MessageBox.Show("Error al obtener los clientes de los trámites: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al obtener los usuarios de los trámites: " + response.ReasonPhrase);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obtener los clientes de los trámites desde la Api: " + ex.Message);
+                MessageBox.Show("Error obtener los usuarios de los trámites desde la Api: " + ex.Message);
                 return null;
 
             }
         }
 
-        public async Task<List<ClienteTramite>?> GetAllWithFilterAsync(string filter)
+        public async Task<List<UsuarioTramite>?> GetAllWithFilterAsync(string filter)
         {
             try
             {
@@ -55,45 +55,45 @@ namespace Desktop.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var clientesTramites = JsonSerializer.Deserialize<List<ClienteTramite>>(json, options);
-                    return clientesTramites;
+                    var usuariosTramites = JsonSerializer.Deserialize<List<UsuarioTramite>>(json, options);
+                    return usuariosTramites;
                 }
                 else
                 {
-                    MessageBox.Show("Error al obtener los clientes de los trámites: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al obtener los usuarios de los trámites: " + response.ReasonPhrase);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obtener los clientes de los trámites desde la Api: " + ex.Message);
+                MessageBox.Show("Error obtener los usuarios de los trámites desde la Api: " + ex.Message);
                 return null;
 
             }
         }
 
-        public async Task<bool> AddClienteTramiteAsync(ClienteTramite clienteTramite)
+        public async Task<bool> AddUsuarioTramiteAsync(UsuarioTramite usuarioTramite)
         {
             try
             {
-                var json = JsonSerializer.Serialize(clienteTramite, options);
+                var json = JsonSerializer.Serialize(usuarioTramite, options);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync("", content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Error al crear el cliente del trámite: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al crear el usuario del trámite: " + response.ReasonPhrase);
                     return false;
                 }
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear el cliente del trámite desde la Api: " + ex.Message);
+                MessageBox.Show("Error al crear el usuario del trámite desde la Api: " + ex.Message);
                 return false;
             }
         }
 
-        public async Task<bool> DeleteClienteTramiteAsync(int id)
+        public async Task<bool> DeleteUsuarioTramiteAsync(int id)
         {
             try
             {
@@ -104,18 +104,18 @@ namespace Desktop.Services
                 }
                 else
                 {
-                    MessageBox.Show("Error al eliminar el cliente del trámite: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al eliminar el usuario del trámite: " + response.ReasonPhrase);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al eliminar el cliente del trámite desde la Api: " + ex.Message);
+                MessageBox.Show("Error al eliminar el usuario del trámite desde la Api: " + ex.Message);
                 return false;
             }
         }
 
-        public async Task<List<ClienteTramite>?> GetDeletedsAsync()
+        public async Task<List<UsuarioTramite>?> GetDeletedsAsync()
         {
             try
             {
@@ -123,24 +123,24 @@ namespace Desktop.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var clientesTramites = JsonSerializer.Deserialize<List<ClienteTramite>>(json, options);
-                    return clientesTramites;
+                    var usuariosTramites = JsonSerializer.Deserialize<List<UsuarioTramite>>(json, options);
+                    return usuariosTramites;
                 }
                 else
                 {
-                    MessageBox.Show("Error al obtener los clientes de los trámites: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al obtener los usuarios de los trámites: " + response.ReasonPhrase);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obtener los clientes de los trámites desde la Api: " + ex.Message);
+                MessageBox.Show("Error obtener los usuarios de los trámites desde la Api: " + ex.Message);
                 return null;
 
             }
         }
 
-        public async Task<bool> RestoreClienteTramiteAsync(int id)
+        public async Task<bool> RestoreUsuarioTramiteAsync(int id)
         {
             try
             {
@@ -151,36 +151,36 @@ namespace Desktop.Services
                 }
                 else
                 {
-                    MessageBox.Show("Error al restaurar el cliente del trámite: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al restaurar el usuario del trámite: " + response.ReasonPhrase);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al restaurar el cliente del trámite desde la Api: " + ex.Message);
+                MessageBox.Show("Error al restaurar el usuario del trámite desde la Api: " + ex.Message);
                 return false;
             }
         }
 
 
-        public async Task<bool> UpdateClienteTramiteAsync(ClienteTramite clienteTramite)
+        public async Task<bool> UpdateUsuarioTramiteAsync(UsuarioTramite usuarioTramite)
         {
             try
             {
-                var json = JsonSerializer.Serialize(clienteTramite, options);
+                var json = JsonSerializer.Serialize(usuarioTramite, options);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                string idclienteTramite = clienteTramite.Id.ToString();
-                var response = await httpClient.PutAsync(idclienteTramite, content);
+                string idusuarioTramite = usuarioTramite.Id.ToString();
+                var response = await httpClient.PutAsync(idusuarioTramite, content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Error al actualizar el cliente del trámite: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al actualizar el usuario del trámite: " + response.ReasonPhrase);
                     return false;
                 }
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al actualizar el cliente del trámite desde la Api: " + ex.Message);
+                MessageBox.Show("Error al actualizar el usuario del trámite desde la Api: " + ex.Message);
                 return false;
             }
         }
@@ -191,7 +191,7 @@ namespace Desktop.Services
             var urlApi = Environment.GetEnvironmentVariable("URLAPI");
             //instanciamos el httpClient y lo configuramos para poder utilizarlo en cada uno de los métodos
             var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(urlApi + "ClientesTramites/");
+            httpClient.BaseAddress = new Uri(urlApi + "UsuariosTramites/");
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             return httpClient;
         }

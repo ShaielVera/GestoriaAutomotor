@@ -12,30 +12,30 @@ using System.Windows.Forms;
 
 namespace Desktop.Views
 {
-    public partial class ClientesTramitesApiView : Form
+    public partial class UsuariosTramitesApiView : Form
     {
-        ClientesTramitesApiService clientesTramitesService = new ClientesTramitesApiService();
-        ClientesApiService clientesService = new ClientesApiService();
+        UsuariosTramitesApiService usuariosTramitesService = new UsuariosTramitesApiService();
+        UsuariosApiService usuariosService = new UsuariosApiService();
         TramitesApiService tramitesService = new TramitesApiService();
 
-        ClienteTramite clienteTramiteModificado;
-        public ClientesTramitesApiView()
+        UsuarioTramite usuarioTramiteModificado;
+        public UsuariosTramitesApiView()
         {
             InitializeComponent();
-            _ = LoadClientesTramites();
-            _ = LoadComboClientes();
+            _ = LoadUsuariosTramites();
+            _ = LoadComboUsuarios();
             _ = LoadComboTramites();
 
         }
 
-        private async Task LoadComboClientes()
+        private async Task LoadComboUsuarios()
         {
-            var clientes = await clientesService.GetAllAsync();
-            if (clientes != null)
+            var usuarios = await usuariosService.GetAllAsync();
+            if (usuarios != null)
             {
-                comboClientes.DataSource = clientes;
-                comboClientes.ValueMember = "Id";
-                comboClientes.SelectedIndex = -1;
+                comboUsuarios.DataSource = usuarios;
+                comboUsuarios.ValueMember = "Id";
+                comboUsuarios.SelectedIndex = -1;
             }
         }
 
@@ -50,60 +50,60 @@ namespace Desktop.Views
             }
         }
 
-        private async Task LoadClientesTramites()
+        private async Task LoadUsuariosTramites()
         {
-            var clientesTramites = await clientesTramitesService.GetAllAsync();
-            if (clientesTramites != null)
+            var usuariosTramites = await usuariosTramitesService.GetAllAsync();
+            if (usuariosTramites != null)
             {
-                dataGridClientesTramites.DataSource = clientesTramites;
+                dataGridUsuariosTramites.DataSource = usuariosTramites;
             }
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)
         {
-            var clientesTramites = await clientesTramitesService.GetAllWithFilterAsync(txtBusqueda.Text);
-            if (clientesTramites != null)
+            var usuariosTramites = await usuariosTramitesService.GetAllWithFilterAsync(txtBusqueda.Text);
+            if (usuariosTramites != null)
             {
-                dataGridClientesTramites.DataSource = clientesTramites;
+                dataGridUsuariosTramites.DataSource = usuariosTramites;
             }
         }
 
         private async void btnGuardar_Click(object sender, EventArgs e)
         {
-            ClienteTramite clienteTramite = new ClienteTramite
+            UsuarioTramite usuarioTramite = new UsuarioTramite
             {
-                ClienteId = comboClientes.SelectedValue != null ? (int)comboClientes.SelectedValue : 0,
+                UsuarioId = comboUsuarios.SelectedValue != null ? (int)comboUsuarios.SelectedValue : 0,
                 TramiteId = comboTramites.SelectedValue != null ? (int)comboTramites.SelectedValue : 0,
-                RolCliente = comboRolCliente.Text
+                RolUsuario = comboRolUsuario.Text
             };
-            bool clienteTramiteGuardado;
-            if (clienteTramiteModificado == null)
+            bool usuarioTramiteGuardado;
+            if (usuarioTramiteModificado == null)
             {
-                clienteTramiteGuardado = await clientesTramitesService.AddClienteTramiteAsync(clienteTramite);
+                usuarioTramiteGuardado = await usuariosTramitesService.AddUsuarioTramiteAsync(usuarioTramite);
             }
             else
             {
-                clienteTramite.Id = clienteTramiteModificado.Id;
-                clienteTramiteGuardado = await clientesTramitesService.UpdateClienteTramiteAsync(clienteTramite);
+                usuarioTramite.Id = usuarioTramiteModificado.Id;
+                usuarioTramiteGuardado = await usuariosTramitesService.UpdateUsuarioTramiteAsync(usuarioTramite);
             }
-            if (!clienteTramiteGuardado)
+            if (!usuarioTramiteGuardado)
             {
-                MessageBox.Show("Error al guardar el cliente del trámite");
+                MessageBox.Show("Error al guardar el usuario del trámite");
                 return;
             }
-            MessageBox.Show("Cliente del trámite guardado correctamente");
-            await LoadClientesTramites();
+            MessageBox.Show("Usuario del trámite guardado correctamente");
+            await LoadUsuariosTramites();
             ClearTextBox();
             tabControl1.SelectedTab = tabPageLista;
-            clienteTramiteModificado = null;
+            usuarioTramiteModificado = null;
 
         }
 
         private void ClearTextBox()
         {
-            comboClientes.SelectedIndex = -1;
+            comboUsuarios.SelectedIndex = -1;
             comboTramites.SelectedIndex = -1;
-            comboRolCliente.SelectedIndex = -1;
+            comboRolUsuario.SelectedIndex = -1;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -115,24 +115,24 @@ namespace Desktop.Views
         {
             tabControl1.SelectedTab = tabPageLista;
             ClearTextBox();
-            clienteTramiteModificado = null;
+            usuarioTramiteModificado = null;
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            //capturamos el cliente del trámite seleccionado en la grilla
-            if (dataGridClientesTramites.CurrentRow == null)
+            //capturamos el usuario del trámite seleccionado en la grilla
+            if (dataGridUsuariosTramites.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un cliente del trámite para modificar");
+                MessageBox.Show("Seleccione un usuario del trámite para modificar");
                 return;
             }
-            clienteTramiteModificado = (ClienteTramite)dataGridClientesTramites.CurrentRow.DataBoundItem;
-            //llenamos los campos del formulario con los datos de cliente del trámite seleccionado
-            if (clienteTramiteModificado.ClienteId != 0)
-                comboClientes.SelectedValue = clienteTramiteModificado.ClienteId;
-            if (clienteTramiteModificado.TramiteId != 0)
-                comboTramites.SelectedValue = clienteTramiteModificado.TramiteId;
-            comboRolCliente.SelectedItem = clienteTramiteModificado.RolCliente;
+            usuarioTramiteModificado = (UsuarioTramite)dataGridUsuariosTramites.CurrentRow.DataBoundItem;
+            //llenamos los campos del formulario con los datos de usuario del trámite seleccionado
+            if (usuarioTramiteModificado.UsuarioId != 0)
+                comboUsuarios.SelectedValue = usuarioTramiteModificado.UsuarioId;
+            if (usuarioTramiteModificado.TramiteId != 0)
+                comboTramites.SelectedValue = usuarioTramiteModificado.TramiteId;
+            comboRolUsuario.SelectedItem = usuarioTramiteModificado.RolUsuario;
             //cambiamos a la pestaña de agregar/editar
             tabControl1.SelectedTab = tabPageAgregarEditar;
         }
@@ -149,27 +149,27 @@ namespace Desktop.Views
 
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
-            //capturamos el cliente del trámite seleccionado en la grilla
-            if (dataGridClientesTramites.CurrentRow == null)
+            //capturamos el usuario del trámite seleccionado en la grilla
+            if (dataGridUsuariosTramites.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un cliente del trámite para eliminar");
+                MessageBox.Show("Seleccione un usuario del trámite para eliminar");
                 return;
             }
 
-            var clienteTramiteAEliminar = (ClienteTramite)dataGridClientesTramites.CurrentRow.DataBoundItem;
-            //preguntamos si está seguro de eliminar el cliente del trámite
-            var result = MessageBox.Show($"¿Está seguro de eliminar al cliente del trámite {clienteTramiteAEliminar.Cliente} ({clienteTramiteAEliminar.RolCliente})?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var usuarioTramiteAEliminar = (UsuarioTramite)dataGridUsuariosTramites.CurrentRow.DataBoundItem;
+            //preguntamos si está seguro de eliminar el usuario del trámite
+            var result = MessageBox.Show($"¿Está seguro de eliminar al usuario del trámite {usuarioTramiteAEliminar.Usuario} ({usuarioTramiteAEliminar.RolUsuario})?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                //eliminamos el cliente del trámite
-                var clienteTramiteEliminado = await clientesTramitesService.DeleteClienteTramiteAsync(clienteTramiteAEliminar.Id);
-                if (!clienteTramiteEliminado)
+                //eliminamos el usuario del trámite
+                var usuarioTramiteEliminado = await usuariosTramitesService.DeleteUsuarioTramiteAsync(usuarioTramiteAEliminar.Id);
+                if (!usuarioTramiteEliminado)
                 {
-                    MessageBox.Show("Error al eliminar el cliente del trámite");
+                    MessageBox.Show("Error al eliminar el usuario del trámite");
                     return;
                 }
-                MessageBox.Show($"Cliente del trámite {clienteTramiteAEliminar.Cliente} ({clienteTramiteAEliminar.RolCliente}) eliminado correctamente");
-                await LoadClientesTramites();
+                MessageBox.Show($"Usuario del trámite {usuarioTramiteAEliminar.Usuario} ({usuarioTramiteAEliminar.RolUsuario}) eliminado correctamente");
+                await LoadUsuariosTramites();
             }
         }
 
@@ -187,46 +187,46 @@ namespace Desktop.Views
             }
             else
             {
-                await LoadClientesTramites();
+                await LoadUsuariosTramites();
             }
         }
 
         private async Task LoadDeleteds()
         {
-            var clientesTramites = await clientesTramitesService.GetDeletedsAsync();
-            if (clientesTramites != null)
+            var usuariosTramites = await usuariosTramitesService.GetDeletedsAsync();
+            if (usuariosTramites != null)
             {
-                dataGridClientesTramites.DataSource = clientesTramites;
+                dataGridUsuariosTramites.DataSource = usuariosTramites;
             }
         }
 
         private async void btnRestaurar_Click(object sender, EventArgs e)
         {
-            //restauramos el cliente del trámite seleccionado en la grilla
-            if (dataGridClientesTramites.CurrentRow != null)
+            //restauramos el usuario del trámite seleccionado en la grilla
+            if (dataGridUsuariosTramites.CurrentRow != null)
             {
-                var clienteTramiteARestaurar = (ClienteTramite)dataGridClientesTramites.CurrentRow.DataBoundItem;
-                //preguntamos si está seguro de restaurar el cliente del trámite
-                var result = MessageBox.Show($"¿Está seguro de restaurar al cliente del trámite {clienteTramiteARestaurar.Cliente} ({clienteTramiteARestaurar.RolCliente})?", "Confirmar restauración", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var usuarioTramiteARestaurar = (UsuarioTramite)dataGridUsuariosTramites.CurrentRow.DataBoundItem;
+                //preguntamos si está seguro de restaurar el usuario del trámite
+                var result = MessageBox.Show($"¿Está seguro de restaurar al usuario del trámite {usuarioTramiteARestaurar.Usuario} ({usuarioTramiteARestaurar.RolUsuario})?", "Confirmar restauración", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
-                    //restauramos el cliente del trámite
-                    var clienteTramiteRestaurado = await clientesTramitesService.RestoreClienteTramiteAsync(clienteTramiteARestaurar.Id);
-                    if (clienteTramiteRestaurado)
+                    //restauramos el usuario del trámite
+                    var usuarioTramiteRestaurado = await usuariosTramitesService.RestoreUsuarioTramiteAsync(usuarioTramiteARestaurar.Id);
+                    if (usuarioTramiteRestaurado)
                     {
-                        MessageBox.Show($"Cliente del trámite {clienteTramiteARestaurar.Cliente} ({clienteTramiteARestaurar.RolCliente}) restaurado correctamente");
+                        MessageBox.Show($"Usuario del trámite {usuarioTramiteARestaurar.Usuario} ({usuarioTramiteARestaurar.RolUsuario}) restaurado correctamente");
                         await LoadDeleteds();
                     }
                     else
                     {
-                        MessageBox.Show("Error al restaurar el cliente del trámite");
+                        MessageBox.Show("Error al restaurar el usuario del trámite");
                     }
                 }
             }
 
             else
             {
-                MessageBox.Show("Seleccione un cliente del trámite para restaurar");
+                MessageBox.Show("Seleccione un usuario del trámite para restaurar");
             }
         }
     }

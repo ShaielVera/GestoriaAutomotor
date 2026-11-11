@@ -12,61 +12,61 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientesTramitesController : ControllerBase
+    public class UsuariosTramitesController : ControllerBase
     {
         private readonly GestoriaContext _context;
 
-        public ClientesTramitesController(GestoriaContext context)
+        public UsuariosTramitesController(GestoriaContext context)
         {
             _context = context;
         }
 
-        // GET: api/ClientesTramites
+        // GET: api/UsuariosTramites
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ClienteTramite>>> GetClientesTramites([FromQuery] string filtro="")
+        public async Task<ActionResult<IEnumerable<UsuarioTramite>>> GetUsuariosTramites([FromQuery] string filtro="")
         {
             filtro = filtro.ToUpper();
-            return await _context.ClientesTramites
-                .Include(ct => ct.Cliente)
+            return await _context.UsuariosTramites
+                .Include(ct => ct.Usuario)
                 .Include(ct => ct.Tramite)
                 .ThenInclude(t => t.Vehiculo)
-                .Where(ct => ct.RolCliente.ToUpper().Contains(filtro))
-                .OrderBy(ct => ct.ClienteId)
+                .Where(ct => ct.RolUsuario.ToUpper().Contains(filtro))
+                .OrderBy(ct => ct.UsuarioId)
                 .ToListAsync();
         }
 
-        // devolvemos el total de clientes-tramites que no estan eliminados
+        // devolvemos el total de usuarios-tramites que no estan eliminados
         [HttpGet("total")]
-        public async Task<ActionResult<int>> GetTotalClientesTramites()
+        public async Task<ActionResult<int>> GetTotalUsuariosTramites()
         {
-            return await _context.ClientesTramites.CountAsync(ct => !ct.IsDeleted);
+            return await _context.UsuariosTramites.CountAsync(ct => !ct.IsDeleted);
         }
 
-        // GET: api/ClientesTramites/5
+        // GET: api/UsuariosTramites/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClienteTramite>> GetClienteTramite(int id)
+        public async Task<ActionResult<UsuarioTramite>> GetUsuarioTramite(int id)
         {
-            var clienteTramite = await _context.ClientesTramites.Include(ct => ct.Cliente).Include(ct => ct.Tramite).ThenInclude(t => t.Vehiculo).FirstOrDefaultAsync(ct => ct.Id == id);
+            var usuarioTramite = await _context.UsuariosTramites.Include(ct => ct.Usuario).Include(ct => ct.Tramite).ThenInclude(t => t.Vehiculo).FirstOrDefaultAsync(ct => ct.Id == id);
 
-            if (clienteTramite == null)
+            if (usuarioTramite == null)
             {
                 return NotFound();
             }
 
-            return clienteTramite;
+            return usuarioTramite;
         }
 
-        // PUT: api/ClientesTramites/5
+        // PUT: api/UsuariosTramites/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClienteTramite(int id, ClienteTramite clienteTramite)
+        public async Task<IActionResult> PutUsuarioTramite(int id, UsuarioTramite usuarioTramite)
         {
-            if (id != clienteTramite.Id)
+            if (id != usuarioTramite.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(clienteTramite).State = EntityState.Modified;
+            _context.Entry(usuarioTramite).State = EntityState.Modified;
 
             try
             {
@@ -74,7 +74,7 @@ namespace Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteTramiteExists(id))
+                if (!UsuarioTramiteExists(id))
                 {
                     return NotFound();
                 }
@@ -87,59 +87,59 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        // POST: api/ClientesTramites
+        // POST: api/UsuariosTramites
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ClienteTramite>> PostClienteTramite(ClienteTramite clienteTramite)
+        public async Task<ActionResult<UsuarioTramite>> PostUsuarioTramite(UsuarioTramite usuarioTramite)
         {
-            _context.ClientesTramites.Add(clienteTramite);
+            _context.UsuariosTramites.Add(usuarioTramite);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetClienteTramite", new { id = clienteTramite.Id }, clienteTramite);
+            return CreatedAtAction("GetUsuarioTramite", new { id = usuarioTramite.Id }, usuarioTramite);
         }
 
-        // DELETE: api/ClientesTramites/5
+        // DELETE: api/UsuariosTramites/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClienteTramite(int id)
+        public async Task<IActionResult> DeleteUsuarioTramite(int id)
         {
-            var clienteTramite = await _context.ClientesTramites.FindAsync(id);
-            if (clienteTramite == null)
+            var usuarioTramite = await _context.UsuariosTramites.FindAsync(id);
+            if (usuarioTramite == null)
             {
                 return NotFound();
             }
 
-            clienteTramite.IsDeleted = true;
-            _context.Entry(clienteTramite).State = EntityState.Modified;
+            usuarioTramite.IsDeleted = true;
+            _context.Entry(usuarioTramite).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         [HttpGet("deleteds")]
-        public async Task<ActionResult<IEnumerable<ClienteTramite>>> GetDeleteds()
+        public async Task<ActionResult<IEnumerable<UsuarioTramite>>> GetDeleteds()
         {
-            return await _context.ClientesTramites.IgnoreQueryFilters().Include(ct => ct.Cliente).Include(ct => ct.Tramite).ThenInclude(t => t.Vehiculo).Where(ct => ct.IsDeleted).ToListAsync();
+            return await _context.UsuariosTramites.IgnoreQueryFilters().Include(ct => ct.Usuario).Include(ct => ct.Tramite).ThenInclude(t => t.Vehiculo).Where(ct => ct.IsDeleted).ToListAsync();
         }
 
         [HttpPut("restore/{id}")]
-        public async Task<IActionResult> RestoreClienteTramite(int id)
+        public async Task<IActionResult> RestoreUsuarioTramite(int id)
         {
-            var clienteTramite = await _context.ClientesTramites.IgnoreQueryFilters().FirstOrDefaultAsync(ct => ct.Id == id);
-            if (clienteTramite == null)
+            var usuarioTramite = await _context.UsuariosTramites.IgnoreQueryFilters().FirstOrDefaultAsync(ct => ct.Id == id);
+            if (usuarioTramite == null)
             {
                 return NotFound();
             }
 
-            clienteTramite.IsDeleted = false;
-            _context.Entry(clienteTramite).State = EntityState.Modified;
+            usuarioTramite.IsDeleted = false;
+            _context.Entry(usuarioTramite).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ClienteTramiteExists(int id)
+        private bool UsuarioTramiteExists(int id)
         {
-            return _context.ClientesTramites.Any(e => e.Id == id);
+            return _context.UsuariosTramites.Any(e => e.Id == id);
         }
     }
 }

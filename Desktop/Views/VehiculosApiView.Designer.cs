@@ -46,7 +46,7 @@
             txtModelo = new TextBox();
             comboTipo = new ComboBox();
             numAnio = new NumericUpDown();
-            comboClientes = new ComboBox();
+            comboUsuarios = new ComboBox();
             label6 = new Label();
             label5 = new Label();
             label4 = new Label();
@@ -180,7 +180,7 @@
             tabPageAgregarEditar.Controls.Add(txtModelo);
             tabPageAgregarEditar.Controls.Add(comboTipo);
             tabPageAgregarEditar.Controls.Add(numAnio);
-            tabPageAgregarEditar.Controls.Add(comboClientes);
+            tabPageAgregarEditar.Controls.Add(comboUsuarios);
             tabPageAgregarEditar.Controls.Add(label6);
             tabPageAgregarEditar.Controls.Add(label5);
             tabPageAgregarEditar.Controls.Add(label4);
@@ -215,14 +215,14 @@
             btnGuardar.UseVisualStyleBackColor = true;
             btnGuardar.Click += btnGuardar_Click;
             // 
-            // comboClientes
+            // comboUsuarios
             // 
-            comboClientes.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboClientes.FormattingEnabled = true;
-            comboClientes.Location = new Point(184, 340);
-            comboClientes.Name = "comboClientes";
-            comboClientes.Size = new Size(445, 23);
-            comboClientes.TabIndex = 11;
+            comboUsuarios.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboUsuarios.FormattingEnabled = true;
+            comboUsuarios.Location = new Point(184, 340);
+            comboUsuarios.Name = "comboUsuarios";
+            comboUsuarios.Size = new Size(445, 23);
+            comboUsuarios.TabIndex = 11;
             // 
             // numAnio
             // 
@@ -273,7 +273,7 @@
             label6.Name = "label6";
             label6.Size = new Size(80, 21);
             label6.TabIndex = 5;
-            label6.Text = "Cliente:";
+            label6.Text = "Usuario:";
             //
             // label5
             //
@@ -361,7 +361,7 @@
         private TextBox txtModelo;
         private ComboBox comboTipo;
         private NumericUpDown numAnio;
-        private ComboBox comboClientes;
+        private ComboBox comboUsuarios;
         private Label label6;
         private Label label5;
         private Label label4;

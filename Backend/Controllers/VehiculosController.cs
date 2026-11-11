@@ -27,7 +27,7 @@ namespace Backend.Controllers
         {
             filtro = filtro.ToUpper();
             return await _context.Vehiculos
-                .Include(v => v.Cliente)
+                .Include(v => v.Usuario)
                 .Where(v => v.Patente.ToUpper().Contains(filtro) ||
                             v.Marca.ToUpper().Contains(filtro) ||
                             v.Modelo.ToUpper().Contains(filtro) ||
@@ -47,7 +47,7 @@ namespace Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Vehiculo>> GetVehiculo(int id)
         {
-            var vehiculo = await _context.Vehiculos.Include(v => v.Cliente).FirstOrDefaultAsync(v => v.Id == id);
+            var vehiculo = await _context.Vehiculos.Include(v => v.Usuario).FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehiculo == null)
             {
@@ -119,7 +119,7 @@ namespace Backend.Controllers
         [HttpGet("deleteds")]
         public async Task<ActionResult<IEnumerable<Vehiculo>>> GetDeleteds()
         {
-            return await _context.Vehiculos.IgnoreQueryFilters().Include(v => v.Cliente).Where(v => v.IsDeleted).ToListAsync();
+            return await _context.Vehiculos.IgnoreQueryFilters().Include(v => v.Usuario).Where(v => v.IsDeleted).ToListAsync();
         }
 
         [HttpPut("restore/{id}")]

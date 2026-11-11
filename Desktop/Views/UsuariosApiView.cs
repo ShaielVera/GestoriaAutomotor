@@ -12,65 +12,65 @@ using System.Windows.Forms;
 
 namespace Desktop.Views
 {
-    public partial class ClientesApiView : Form
+    public partial class UsuariosApiView : Form
     {
-        ClientesApiService clientesService = new ClientesApiService();
+        UsuariosApiService usuariosService = new UsuariosApiService();
 
-        Cliente clienteModificado;
-        public ClientesApiView()
+        Usuario usuarioModificado;
+        public UsuariosApiView()
         {
             InitializeComponent();
-            _ = LoadClientes();
+            _ = LoadUsuarios();
 
         }
 
-        private async Task LoadClientes()
+        private async Task LoadUsuarios()
         {
-            var clientes = await clientesService.GetAllAsync();
-            if (clientes != null)
+            var usuarios = await usuariosService.GetAllAsync();
+            if (usuarios != null)
             {
-                dataGridClientes.DataSource = clientes;
+                dataGridUsuarios.DataSource = usuarios;
             }
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)
         {
-            var clientes = await clientesService.GetAllWithFilterAsync(txtBusqueda.Text);
-            if (clientes != null)
+            var usuarios = await usuariosService.GetAllWithFilterAsync(txtBusqueda.Text);
+            if (usuarios != null)
             {
-                dataGridClientes.DataSource = clientes;
+                dataGridUsuarios.DataSource = usuarios;
             }
         }
 
         private async void btnGuardar_Click(object sender, EventArgs e)
         {
-            Cliente cliente = new Cliente
+            Usuario usuario = new Usuario
             {
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 Dni = txtDni.Text,
                 Telefono = txtTelefono.Text
             };
-            bool clienteGuardado;
-            if (clienteModificado == null)
+            bool usuarioGuardado;
+            if (usuarioModificado == null)
             {
-                clienteGuardado = await clientesService.AddClienteAsync(cliente);
+                usuarioGuardado = await usuariosService.AddUsuarioAsync(usuario);
             }
             else
             {
-                cliente.Id = clienteModificado.Id;
-                clienteGuardado = await clientesService.UpdateClienteAsync(cliente);
+                usuario.Id = usuarioModificado.Id;
+                usuarioGuardado = await usuariosService.UpdateUsuarioAsync(usuario);
             }
-            if (!clienteGuardado)
+            if (!usuarioGuardado)
             {
-                MessageBox.Show("Error al guardar el cliente");
+                MessageBox.Show("Error al guardar el usuario");
                 return;
             }
-            MessageBox.Show("Cliente guardado correctamente");
-            await LoadClientes();
+            MessageBox.Show("Usuario guardado correctamente");
+            await LoadUsuarios();
             ClearTextBox();
             tabControl1.SelectedTab = tabPageLista;
-            clienteModificado = null;
+            usuarioModificado = null;
 
         }
 
@@ -91,23 +91,23 @@ namespace Desktop.Views
         {
             tabControl1.SelectedTab = tabPageLista;
             ClearTextBox();
-            clienteModificado = null;
+            usuarioModificado = null;
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            //capturamos el cliente seleccionado en la grilla
-            if (dataGridClientes.CurrentRow == null)
+            //capturamos el usuario seleccionado en la grilla
+            if (dataGridUsuarios.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un cliente para modificar");
+                MessageBox.Show("Seleccione un usuario para modificar");
                 return;
             }
-            clienteModificado = (Cliente)dataGridClientes.CurrentRow.DataBoundItem;
-            //llenamos los campos del formulario con los datos del cliente seleccionado
-            txtNombre.Text = clienteModificado.Nombre;
-            txtApellido.Text = clienteModificado.Apellido;
-            txtDni.Text = clienteModificado.Dni;
-            txtTelefono.Text = clienteModificado.Telefono;
+            usuarioModificado = (Usuario)dataGridUsuarios.CurrentRow.DataBoundItem;
+            //llenamos los campos del formulario con los datos del usuario seleccionado
+            txtNombre.Text = usuarioModificado.Nombre;
+            txtApellido.Text = usuarioModificado.Apellido;
+            txtDni.Text = usuarioModificado.Dni;
+            txtTelefono.Text = usuarioModificado.Telefono;
             //cambiamos a la pestaña de agregar/editar
             tabControl1.SelectedTab = tabPageAgregarEditar;
         }
@@ -124,27 +124,27 @@ namespace Desktop.Views
 
         private async void btnEliminar_Click(object sender, EventArgs e)
         {
-            //capturamos el cliente seleccionado en la grilla
-            if (dataGridClientes.CurrentRow == null)
+            //capturamos el usuario seleccionado en la grilla
+            if (dataGridUsuarios.CurrentRow == null)
             {
-                MessageBox.Show("Seleccione un cliente para eliminar");
+                MessageBox.Show("Seleccione un usuario para eliminar");
                 return;
             }
 
-            var clienteAEliminar = (Cliente)dataGridClientes.CurrentRow.DataBoundItem;
-            //preguntamos si está seguro de eliminar el cliente
-            var result = MessageBox.Show($"¿Está seguro de eliminar al cliente {clienteAEliminar.Nombre} {clienteAEliminar.Apellido}?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var usuarioAEliminar = (Usuario)dataGridUsuarios.CurrentRow.DataBoundItem;
+            //preguntamos si está seguro de eliminar el usuario
+            var result = MessageBox.Show($"¿Está seguro de eliminar al usuario {usuarioAEliminar.Nombre} {usuarioAEliminar.Apellido}?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                //eliminamos el cliente
-                var clienteEliminado = await clientesService.DeleteClienteAsync(clienteAEliminar.Id);
-                if (!clienteEliminado)
+                //eliminamos el usuario
+                var usuarioEliminado = await usuariosService.DeleteUsuarioAsync(usuarioAEliminar.Id);
+                if (!usuarioEliminado)
                 {
-                    MessageBox.Show("Error al eliminar el cliente");
+                    MessageBox.Show("Error al eliminar el usuario");
                     return;
                 }
-                MessageBox.Show($"Cliente {clienteAEliminar.Nombre} {clienteAEliminar.Apellido} eliminado correctamente");
-                await LoadClientes();
+                MessageBox.Show($"Usuario {usuarioAEliminar.Nombre} {usuarioAEliminar.Apellido} eliminado correctamente");
+                await LoadUsuarios();
             }
         }
 
@@ -162,46 +162,46 @@ namespace Desktop.Views
             }
             else
             {
-                await LoadClientes();
+                await LoadUsuarios();
             }
         }
 
         private async Task LoadDeleteds()
         {
-            var clientes = await clientesService.GetDeletedsAsync();
-            if (clientes != null)
+            var usuarios = await usuariosService.GetDeletedsAsync();
+            if (usuarios != null)
             {
-                dataGridClientes.DataSource = clientes;
+                dataGridUsuarios.DataSource = usuarios;
             }
         }
 
         private async void btnRestaurar_Click(object sender, EventArgs e)
         {
-            //restauramos el cliente seleccionado en la grilla
-            if (dataGridClientes.CurrentRow != null)
+            //restauramos el usuario seleccionado en la grilla
+            if (dataGridUsuarios.CurrentRow != null)
             {
-                var clienteARestaurar = (Cliente)dataGridClientes.CurrentRow.DataBoundItem;
-                //preguntamos si está seguro de restaurar el cliente
-                var result = MessageBox.Show($"¿Está seguro de restaurar al cliente {clienteARestaurar.Nombre} {clienteARestaurar.Apellido}?", "Confirmar restauración", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var usuarioARestaurar = (Usuario)dataGridUsuarios.CurrentRow.DataBoundItem;
+                //preguntamos si está seguro de restaurar el usuario
+                var result = MessageBox.Show($"¿Está seguro de restaurar al usuario {usuarioARestaurar.Nombre} {usuarioARestaurar.Apellido}?", "Confirmar restauración", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
-                    //restauramos el cliente
-                    var clienteRestaurado = await clientesService.RestoreClienteAsync(clienteARestaurar.Id);
-                    if (clienteRestaurado)
+                    //restauramos el usuario
+                    var usuarioRestaurado = await usuariosService.RestoreUsuarioAsync(usuarioARestaurar.Id);
+                    if (usuarioRestaurado)
                     {
-                        MessageBox.Show($"Cliente {clienteARestaurar.Nombre} {clienteARestaurar.Apellido} restaurado correctamente");
+                        MessageBox.Show($"Usuario {usuarioARestaurar.Nombre} {usuarioARestaurar.Apellido} restaurado correctamente");
                         await LoadDeleteds();
                     }
                     else
                     {
-                        MessageBox.Show("Error al restaurar el cliente");
+                        MessageBox.Show("Error al restaurar el usuario");
                     }
                 }
             }
 
             else
             {
-                MessageBox.Show("Seleccione un cliente para restaurar");
+                MessageBox.Show("Seleccione un usuario para restaurar");
             }
         }
     }

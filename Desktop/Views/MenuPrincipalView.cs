@@ -14,10 +14,10 @@ namespace Desktop
             this.Close();
         }
 
-        private void SubMenuClientesApi_Click(object sender, EventArgs e)
+        private void SubMenuUsuariosApi_Click(object sender, EventArgs e)
         {
-            ClientesApiView clientesApiView = new();
-            clientesApiView.ShowDialog();
+            UsuariosApiView usuariosApiView = new();
+            usuariosApiView.ShowDialog();
         }
 
         private void SubMenuEmpleadosApi_Click(object sender, EventArgs e)
@@ -38,10 +38,10 @@ namespace Desktop
             tramitesApiView.ShowDialog();
         }
 
-        private void SubMenuClientesTramitesApi_Click(object sender, EventArgs e)
+        private void SubMenuUsuariosTramitesApi_Click(object sender, EventArgs e)
         {
-            ClientesTramitesApiView clientesTramitesApiView = new();
-            clientesTramitesApiView.ShowDialog();
+            UsuariosTramitesApiView usuariosTramitesApiView = new();
+            usuariosTramitesApiView.ShowDialog();
         }
 
         private void SubMenuTurnosApi_Click(object sender, EventArgs e)

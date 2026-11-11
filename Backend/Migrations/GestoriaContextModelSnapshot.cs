@@ -22,97 +22,6 @@ namespace Backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Services.Models.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Dni")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Usuarios");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Apellido = "Pérez",
-                            Dni = "30111222",
-                            IsDeleted = false,
-                            Nombre = "Juan",
-                            Telefono = "3415551111"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Apellido = "Gómez",
-                            Dni = "32444555",
-                            IsDeleted = false,
-                            Nombre = "Laura",
-                            Telefono = "3415552222"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Apellido = "Díaz",
-                            Dni = "28777888",
-                            IsDeleted = false,
-                            Nombre = "Carlos",
-                            Telefono = "3415553333"
-                        });
-                });
-
-            modelBuilder.Entity("Services.Models.ClienteTramite", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("RolCliente")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("TramiteId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("TramiteId");
-
-                    b.ToTable("ClientesTramites");
-                });
-
             modelBuilder.Entity("Services.Models.Empleado", b =>
                 {
                     b.Property<int>("Id")
@@ -283,6 +192,97 @@ namespace Backend.Migrations
                     b.ToTable("Turnos");
                 });
 
+            modelBuilder.Entity("Services.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Dni")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Apellido = "Pérez",
+                            Dni = "30111222",
+                            IsDeleted = false,
+                            Nombre = "Juan",
+                            Telefono = "3415551111"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Apellido = "Gómez",
+                            Dni = "32444555",
+                            IsDeleted = false,
+                            Nombre = "Laura",
+                            Telefono = "3415552222"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Apellido = "Díaz",
+                            Dni = "28777888",
+                            IsDeleted = false,
+                            Nombre = "Carlos",
+                            Telefono = "3415553333"
+                        });
+                });
+
+            modelBuilder.Entity("Services.Models.UsuarioTramite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("RolUsuario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TramiteId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TramiteId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("UsuariosTramites");
+                });
+
             modelBuilder.Entity("Services.Models.Vehiculo", b =>
                 {
                     b.Property<int>("Id")
@@ -292,9 +292,6 @@ namespace Backend.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Anio")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ClienteId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
@@ -316,9 +313,12 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Vehiculos");
 
@@ -327,54 +327,35 @@ namespace Backend.Migrations
                         {
                             Id = 1,
                             Anio = 2019,
-                            ClienteId = 1,
                             IsDeleted = false,
                             Marca = "Ford",
                             Modelo = "Fiesta",
                             Patente = "AB123CD",
-                            Tipo = "Auto"
+                            Tipo = "Auto",
+                            UsuarioId = 1
                         },
                         new
                         {
                             Id = 2,
                             Anio = 2021,
-                            ClienteId = 2,
                             IsDeleted = false,
                             Marca = "Honda",
                             Modelo = "Wave",
                             Patente = "A012BCD",
-                            Tipo = "Motocicleta"
+                            Tipo = "Motocicleta",
+                            UsuarioId = 2
                         },
                         new
                         {
                             Id = 3,
                             Anio = 2022,
-                            ClienteId = 3,
                             IsDeleted = false,
                             Marca = "Toyota",
                             Modelo = "Corolla",
                             Patente = "AC456EF",
-                            Tipo = "Auto"
+                            Tipo = "Auto",
+                            UsuarioId = 3
                         });
-                });
-
-            modelBuilder.Entity("Services.Models.ClienteTramite", b =>
-                {
-                    b.HasOne("Services.Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Services.Models.Tramite", "Tramite")
-                        .WithMany()
-                        .HasForeignKey("TramiteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Tramite");
                 });
 
             modelBuilder.Entity("Services.Models.Pago", b =>
@@ -418,15 +399,34 @@ namespace Backend.Migrations
                     b.Navigation("Tramite");
                 });
 
-            modelBuilder.Entity("Services.Models.Vehiculo", b =>
+            modelBuilder.Entity("Services.Models.UsuarioTramite", b =>
                 {
-                    b.HasOne("Services.Models.Cliente", "Cliente")
+                    b.HasOne("Services.Models.Tramite", "Tramite")
                         .WithMany()
-                        .HasForeignKey("ClienteId")
+                        .HasForeignKey("TramiteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
+                    b.HasOne("Services.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tramite");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Services.Models.Vehiculo", b =>
+                {
+                    b.HasOne("Services.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
                 });
 #pragma warning restore 612, 618
         }

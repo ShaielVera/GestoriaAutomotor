@@ -13,8 +13,8 @@ namespace Services.Models
         public string Modelo { get; set; } = string.Empty;
         public int Anio { get; set; }
 
-        public int ClienteId { get; set; }          // clave foránea
-        public Cliente? Cliente { get; set; }       // navegación
+        public int UsuarioId { get; set; }          // clave foránea
+        public Usuario? Usuario { get; set; }       // navegación
 
         public bool IsDeleted { get; set; } = false;
 

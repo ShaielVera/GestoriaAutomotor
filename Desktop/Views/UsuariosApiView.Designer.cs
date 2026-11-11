@@ -1,6 +1,6 @@
 ﻿namespace Desktop.Views
 {
-    partial class ClientesApiView
+    partial class UsuariosApiView
     {
         /// <summary>
         /// Required designer variable.
@@ -35,7 +35,7 @@
             btnEliminar = new Button();
             btnModificar = new Button();
             btnNuevo = new Button();
-            dataGridClientes = new DataGridView();
+            dataGridUsuarios = new DataGridView();
             checkEliminado = new CheckBox();
             txtBusqueda = new TextBox();
             tabPageAgregarEditar = new TabPage();
@@ -51,7 +51,7 @@
             label1 = new Label();
             tabControl1.SuspendLayout();
             tabPageLista.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridClientes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridUsuarios).BeginInit();
             tabPageAgregarEditar.SuspendLayout();
             SuspendLayout();
             // 
@@ -73,7 +73,7 @@
             tabPageLista.Controls.Add(btnEliminar);
             tabPageLista.Controls.Add(btnModificar);
             tabPageLista.Controls.Add(btnNuevo);
-            tabPageLista.Controls.Add(dataGridClientes);
+            tabPageLista.Controls.Add(dataGridUsuarios);
             tabPageLista.Controls.Add(checkEliminado);
             tabPageLista.Controls.Add(txtBusqueda);
             tabPageLista.Location = new Point(4, 24);
@@ -135,17 +135,17 @@
             btnNuevo.UseVisualStyleBackColor = true;
             btnNuevo.Click += btnNuevo_Click;
             // 
-            // dataGridClientes
+            // dataGridUsuarios
             // 
-            dataGridClientes.AllowUserToAddRows = false;
-            dataGridClientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridClientes.Location = new Point(70, 137);
-            dataGridClientes.Name = "dataGridClientes";
-            dataGridClientes.ReadOnly = true;
-            dataGridClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridClientes.Size = new Size(550, 265);
-            dataGridClientes.TabIndex = 2;
+            dataGridUsuarios.AllowUserToAddRows = false;
+            dataGridUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridUsuarios.Location = new Point(70, 137);
+            dataGridUsuarios.Name = "dataGridUsuarios";
+            dataGridUsuarios.ReadOnly = true;
+            dataGridUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridUsuarios.Size = new Size(550, 265);
+            dataGridUsuarios.TabIndex = 2;
             // 
             // checkEliminado
             // 
@@ -274,18 +274,18 @@
             label1.TabIndex = 0;
             label1.Text = "Nombre:";
             // 
-            // ClientesApiView
+            // UsuariosApiView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(tabControl1);
-            Name = "ClientesApiView";
-            Text = "ClientesApiView";
+            Name = "UsuariosApiView";
+            Text = "UsuariosApiView";
             tabControl1.ResumeLayout(false);
             tabPageLista.ResumeLayout(false);
             tabPageLista.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridClientes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridUsuarios).EndInit();
             tabPageAgregarEditar.ResumeLayout(false);
             tabPageAgregarEditar.PerformLayout();
             ResumeLayout(false);
@@ -299,7 +299,7 @@
         private TextBox txtBusqueda;
         private Button btnModificar;
         private Button btnNuevo;
-        private DataGridView dataGridClientes;
+        private DataGridView dataGridUsuarios;
         private CheckBox checkEliminado;
         private Button btnBuscar;
         private Button btnRestaurar;

@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 
 namespace Desktop.Services
 {
-    public class ClientesApiService
+    public class UsuariosApiService
     {
         HttpClient httpClient;
         JsonSerializerOptions options;
-        public ClientesApiService()
+        public UsuariosApiService()
         {
             httpClient = SettingHttpClient();
             options = SettingJsonSerializer();
         }
-        public async Task<List<Cliente>?> GetAllAsync()
+        public async Task<List<Usuario>?> GetAllAsync()
         {
             try
             {
@@ -30,24 +30,24 @@ namespace Desktop.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var clientes = JsonSerializer.Deserialize<List<Cliente>>(json, options);
-                    return clientes;
+                    var usuarios = JsonSerializer.Deserialize<List<Usuario>>(json, options);
+                    return usuarios;
                 }
                 else
                 {
-                    MessageBox.Show("Error al obtener los clientes: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al obtener los usuarios: " + response.ReasonPhrase);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obtener los clientes desde la Api: " + ex.Message);
+                MessageBox.Show("Error obtener los usuarios desde la Api: " + ex.Message);
                 return null;
 
             }
         }
 
-        public async Task<List<Cliente>?> GetAllWithFilterAsync(string filter)
+        public async Task<List<Usuario>?> GetAllWithFilterAsync(string filter)
         {
             try
             {
@@ -55,45 +55,45 @@ namespace Desktop.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var clientes = JsonSerializer.Deserialize<List<Cliente>>(json, options);
-                    return clientes;
+                    var usuarios = JsonSerializer.Deserialize<List<Usuario>>(json, options);
+                    return usuarios;
                 }
                 else
                 {
-                    MessageBox.Show("Error al obtener los clientes: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al obtener los usuarios: " + response.ReasonPhrase);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obtener los clientes desde la Api: " + ex.Message);
+                MessageBox.Show("Error obtener los usuarios desde la Api: " + ex.Message);
                 return null;
 
             }
         }
 
-        public async Task<bool> AddClienteAsync(Cliente cliente)
+        public async Task<bool> AddUsuarioAsync(Usuario usuario)
         {
             try
             {
-                var json = JsonSerializer.Serialize(cliente, options);
+                var json = JsonSerializer.Serialize(usuario, options);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync("", content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Error al crear el cliente: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al crear el usuario: " + response.ReasonPhrase);
                     return false;
                 }
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear el cliente desde la Api: " + ex.Message);
+                MessageBox.Show("Error al crear el usuario desde la Api: " + ex.Message);
                 return false;
             }
         }
 
-        public async Task<bool> DeleteClienteAsync(int id)
+        public async Task<bool> DeleteUsuarioAsync(int id)
         {
             try
             {
@@ -104,18 +104,18 @@ namespace Desktop.Services
                 }
                 else
                 {
-                    MessageBox.Show("Error al eliminar el cliente: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al eliminar el usuario: " + response.ReasonPhrase);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al eliminar el cliente desde la Api: " + ex.Message);
+                MessageBox.Show("Error al eliminar el usuario desde la Api: " + ex.Message);
                 return false;
             }
         }
 
-        public async Task<List<Cliente>?> GetDeletedsAsync()
+        public async Task<List<Usuario>?> GetDeletedsAsync()
         {
             try
             {
@@ -123,24 +123,24 @@ namespace Desktop.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var clientes = JsonSerializer.Deserialize<List<Cliente>>(json, options);
-                    return clientes;
+                    var usuarios = JsonSerializer.Deserialize<List<Usuario>>(json, options);
+                    return usuarios;
                 }
                 else
                 {
-                    MessageBox.Show("Error al obtener los clientes: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al obtener los usuarios: " + response.ReasonPhrase);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error obtener los clientes desde la Api: " + ex.Message);
+                MessageBox.Show("Error obtener los usuarios desde la Api: " + ex.Message);
                 return null;
 
             }
         }
 
-        public async Task<bool> RestoreClienteAsync(int id)
+        public async Task<bool> RestoreUsuarioAsync(int id)
         {
             try
             {
@@ -151,36 +151,36 @@ namespace Desktop.Services
                 }
                 else
                 {
-                    MessageBox.Show("Error al restaurar el cliente: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al restaurar el usuario: " + response.ReasonPhrase);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al restaurar el cliente desde la Api: " + ex.Message);
+                MessageBox.Show("Error al restaurar el usuario desde la Api: " + ex.Message);
                 return false;
             }
         }
 
 
-        public async Task<bool> UpdateClienteAsync(Cliente cliente)
+        public async Task<bool> UpdateUsuarioAsync(Usuario usuario)
         {
             try
             {
-                var json = JsonSerializer.Serialize(cliente, options);
+                var json = JsonSerializer.Serialize(usuario, options);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                string idcliente = cliente.Id.ToString();
-                var response = await httpClient.PutAsync(idcliente, content);
+                string idusuario = usuario.Id.ToString();
+                var response = await httpClient.PutAsync(idusuario, content);
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Error al actualizar el cliente: " + response.ReasonPhrase);
+                    MessageBox.Show("Error al actualizar el usuario: " + response.ReasonPhrase);
                     return false;
                 }
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al actualizar el cliente desde la Api: " + ex.Message);
+                MessageBox.Show("Error al actualizar el usuario desde la Api: " + ex.Message);
                 return false;
             }
         }
@@ -191,7 +191,7 @@ namespace Desktop.Services
             var urlApi = Environment.GetEnvironmentVariable("URLAPI");
             //instanciamos el httpClient y lo configuramos para poder utilizarlo en cada uno de los métodos
             var httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(urlApi + "Clientes/");
+            httpClient.BaseAddress = new Uri(urlApi + "Usuarios/");
             httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             return httpClient;
         }

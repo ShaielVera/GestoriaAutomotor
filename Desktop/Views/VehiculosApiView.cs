@@ -15,25 +15,25 @@ namespace Desktop.Views
     public partial class VehiculosApiView : Form
     {
         VehiculosApiService vehiculosService = new VehiculosApiService();
-        ClientesApiService clientesService = new ClientesApiService();
+        UsuariosApiService usuariosService = new UsuariosApiService();
 
         Vehiculo vehiculoModificado;
         public VehiculosApiView()
         {
             InitializeComponent();
             _ = LoadVehiculos();
-            _ = LoadComboClientes();
+            _ = LoadComboUsuarios();
 
         }
 
-        private async Task LoadComboClientes()
+        private async Task LoadComboUsuarios()
         {
-            var clientes = await clientesService.GetAllAsync();
-            if (clientes != null)
+            var usuarios = await usuariosService.GetAllAsync();
+            if (usuarios != null)
             {
-                comboClientes.DataSource = clientes;
-                comboClientes.ValueMember = "Id";
-                comboClientes.SelectedIndex = -1;
+                comboUsuarios.DataSource = usuarios;
+                comboUsuarios.ValueMember = "Id";
+                comboUsuarios.SelectedIndex = -1;
             }
         }
 
@@ -64,7 +64,7 @@ namespace Desktop.Views
                 Modelo = txtModelo.Text,
                 Tipo = comboTipo.Text,
                 Anio = (int)numAnio.Value,
-                ClienteId = comboClientes.SelectedValue != null ? (int)comboClientes.SelectedValue : 0
+                UsuarioId = comboUsuarios.SelectedValue != null ? (int)comboUsuarios.SelectedValue : 0
             };
             bool vehiculoGuardado;
             if (vehiculoModificado == null)
@@ -96,7 +96,7 @@ namespace Desktop.Views
             txtModelo.Clear();
             comboTipo.SelectedIndex = -1;
             numAnio.Value = 2020;
-            comboClientes.SelectedIndex = -1;
+            comboUsuarios.SelectedIndex = -1;
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -126,8 +126,8 @@ namespace Desktop.Views
             txtModelo.Text = vehiculoModificado.Modelo;
             comboTipo.SelectedItem = vehiculoModificado.Tipo;
             numAnio.Value = vehiculoModificado.Anio;
-            if (vehiculoModificado.ClienteId != 0)
-                comboClientes.SelectedValue = vehiculoModificado.ClienteId;
+            if (vehiculoModificado.UsuarioId != 0)
+                comboUsuarios.SelectedValue = vehiculoModificado.UsuarioId;
             //cambiamos a la pestaña de agregar/editar
             tabControl1.SelectedTab = tabPageAgregarEditar;
         }

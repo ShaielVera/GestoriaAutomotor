@@ -12,12 +12,11 @@ namespace Backend.Data
         public GestoriaContext(DbContextOptions<GestoriaContext> options) : base(options)
         {
         }
-        //la tabla se llama Usuarios porque Clientes ya existe en la base (es la del inventario)
-        public DbSet<Cliente> Usuarios { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Vehiculo> Vehiculos { get; set; }
         public DbSet<Tramite> Tramites { get; set; }
-        public DbSet<ClienteTramite> ClientesTramites { get; set; }
+        public DbSet<UsuarioTramite> UsuariosTramites { get; set; }
         public DbSet<Turno> Turnos { get; set; }
         public DbSet<Pago> Pagos { get; set; }
 
@@ -41,11 +40,11 @@ namespace Backend.Data
         //creamos el método OnModelCreating para configurar el modelo e insertar datos semilla
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //cargamos datos semilla para la tabla Clientes
-            modelBuilder.Entity<Cliente>().HasData(
-                new Cliente { Id = 1, Nombre = "Juan", Apellido = "Pérez", Dni = "30111222", Telefono = "3415551111" },
-                new Cliente { Id = 2, Nombre = "Laura", Apellido = "Gómez", Dni = "32444555", Telefono = "3415552222" },
-                new Cliente { Id = 3, Nombre = "Carlos", Apellido = "Díaz", Dni = "28777888", Telefono = "3415553333" }
+            //cargamos datos semilla para la tabla Usuarios
+            modelBuilder.Entity<Usuario>().HasData(
+                new Usuario { Id = 1, Nombre = "Juan", Apellido = "Pérez", Dni = "30111222", Telefono = "3415551111" },
+                new Usuario { Id = 2, Nombre = "Laura", Apellido = "Gómez", Dni = "32444555", Telefono = "3415552222" },
+                new Usuario { Id = 3, Nombre = "Carlos", Apellido = "Díaz", Dni = "28777888", Telefono = "3415553333" }
             );
 
             //cargamos datos semilla para la tabla Empleados
@@ -56,9 +55,9 @@ namespace Backend.Data
 
             //cargamos datos semilla para la tabla Vehiculos
             modelBuilder.Entity<Vehiculo>().HasData(
-                new Vehiculo { Id = 1, Patente = "AB123CD", Marca = "Ford", Tipo = "Auto", Modelo = "Fiesta", Anio = 2019, ClienteId = 1 },
-                new Vehiculo { Id = 2, Patente = "A012BCD", Marca = "Honda", Tipo = "Motocicleta", Modelo = "Wave", Anio = 2021, ClienteId = 2 },
-                new Vehiculo { Id = 3, Patente = "AC456EF", Marca = "Toyota", Tipo = "Auto", Modelo = "Corolla", Anio = 2022, ClienteId = 3 }
+                new Vehiculo { Id = 1, Patente = "AB123CD", Marca = "Ford", Tipo = "Auto", Modelo = "Fiesta", Anio = 2019, UsuarioId = 1 },
+                new Vehiculo { Id = 2, Patente = "A012BCD", Marca = "Honda", Tipo = "Motocicleta", Modelo = "Wave", Anio = 2021, UsuarioId = 2 },
+                new Vehiculo { Id = 3, Patente = "AC456EF", Marca = "Toyota", Tipo = "Auto", Modelo = "Corolla", Anio = 2022, UsuarioId = 3 }
             );
 
             //cargamos datos semilla para la tabla Tramites
@@ -67,11 +66,11 @@ namespace Backend.Data
                 new Tramite { Id = 2, TipoTramite = "Cambio de radicación", Estado = "En proceso", VehiculoId = 2 }
             );
 
-            //desactivamos la eliminación en cascada para la relación entre Vehiculo y Cliente usando Fluent API
+            //desactivamos la eliminación en cascada para la relación entre Vehiculo y Usuario usando Fluent API
             modelBuilder.Entity<Vehiculo>()
-                .HasOne(v => v.Cliente)
+                .HasOne(v => v.Usuario)
                 .WithMany()
-                .HasForeignKey(v => v.ClienteId)
+                .HasForeignKey(v => v.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
             //desactivamos la eliminación en cascada para la relación entre Tramite y Vehiculo usando Fluent API
             modelBuilder.Entity<Tramite>()
@@ -79,13 +78,13 @@ namespace Backend.Data
                 .WithMany()
                 .HasForeignKey(t => t.VehiculoId)
                 .OnDelete(DeleteBehavior.Restrict);
-            //desactivamos la eliminación en cascada para las relaciones de la tabla intermedia ClienteTramite
-            modelBuilder.Entity<ClienteTramite>()
-                .HasOne(ct => ct.Cliente)
+            //desactivamos la eliminación en cascada para las relaciones de la tabla intermedia UsuarioTramite
+            modelBuilder.Entity<UsuarioTramite>()
+                .HasOne(ct => ct.Usuario)
                 .WithMany()
-                .HasForeignKey(ct => ct.ClienteId)
+                .HasForeignKey(ct => ct.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<ClienteTramite>()
+            modelBuilder.Entity<UsuarioTramite>()
                 .HasOne(ct => ct.Tramite)
                 .WithMany()
                 .HasForeignKey(ct => ct.TramiteId)
@@ -109,7 +108,7 @@ namespace Backend.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // configuramos los queries filters para que no se muestren los registros eliminados
-            modelBuilder.Entity<Cliente>()
+            modelBuilder.Entity<Usuario>()
                 .HasQueryFilter(c => !c.IsDeleted);
             modelBuilder.Entity<Empleado>()
                 .HasQueryFilter(e => !e.IsDeleted);
@@ -117,7 +116,7 @@ namespace Backend.Data
                 .HasQueryFilter(v => !v.IsDeleted);
             modelBuilder.Entity<Tramite>()
                 .HasQueryFilter(t => !t.IsDeleted);
-            modelBuilder.Entity<ClienteTramite>()
+            modelBuilder.Entity<UsuarioTramite>()
                 .HasQueryFilter(ct => !ct.IsDeleted);
             modelBuilder.Entity<Turno>()
                 .HasQueryFilter(t => !t.IsDeleted);

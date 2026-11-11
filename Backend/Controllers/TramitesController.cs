@@ -28,7 +28,7 @@ namespace Backend.Controllers
             filtro = filtro.ToUpper();
             return await _context.Tramites
                 .Include(t => t.Vehiculo)
-                .ThenInclude(v => v.Cliente)
+                .ThenInclude(v => v.Usuario)
                 .Where(t => t.TipoTramite.ToUpper().Contains(filtro) ||
                             t.Estado.ToUpper().Contains(filtro))
                 .OrderBy(t => t.TipoTramite)
@@ -46,7 +46,7 @@ namespace Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Tramite>> GetTramite(int id)
         {
-            var tramite = await _context.Tramites.Include(t => t.Vehiculo).ThenInclude(v => v.Cliente).FirstOrDefaultAsync(t => t.Id == id);
+            var tramite = await _context.Tramites.Include(t => t.Vehiculo).ThenInclude(v => v.Usuario).FirstOrDefaultAsync(t => t.Id == id);
 
             if (tramite == null)
             {
@@ -118,7 +118,7 @@ namespace Backend.Controllers
         [HttpGet("deleteds")]
         public async Task<ActionResult<IEnumerable<Tramite>>> GetDeleteds()
         {
-            return await _context.Tramites.IgnoreQueryFilters().Include(t => t.Vehiculo).ThenInclude(v => v.Cliente).Where(t => t.IsDeleted).ToListAsync();
+            return await _context.Tramites.IgnoreQueryFilters().Include(t => t.Vehiculo).ThenInclude(v => v.Usuario).Where(t => t.IsDeleted).ToListAsync();
         }
 
         [HttpPut("restore/{id}")]

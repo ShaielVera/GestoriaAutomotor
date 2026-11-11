@@ -12,18 +12,18 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class UsuariosController : ControllerBase
     {
         private readonly GestoriaContext _context;
 
-        public ClientesController(GestoriaContext context)
+        public UsuariosController(GestoriaContext context)
         {
             _context = context;
         }
 
-        // GET: api/Clientes
+        // GET: api/Usuarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes([FromQuery] string filtro="")
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios([FromQuery] string filtro="")
         {
             filtro = filtro.ToUpper();
             return await _context.Usuarios
@@ -35,38 +35,38 @@ namespace Backend.Controllers
                 .ToListAsync();
         }
 
-        // devolvemos el total de clientes que no estan eliminados
+        // devolvemos el total de usuarios que no estan eliminados
         [HttpGet("total")]
-        public async Task<ActionResult<int>> GetTotalClientes()
+        public async Task<ActionResult<int>> GetTotalUsuarios()
         {
             return await _context.Usuarios.CountAsync(c => !c.IsDeleted);
         }
 
-        // GET: api/Clientes/5
+        // GET: api/Usuarios/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
-            var cliente = await _context.Usuarios.FirstOrDefaultAsync(c => c.Id == id);
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (cliente == null)
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            return cliente;
+            return usuario;
         }
 
-        // PUT: api/Clientes/5
+        // PUT: api/Usuarios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
-            if (id != cliente.Id)
+            if (id != usuario.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(usuario).State = EntityState.Modified;
 
             try
             {
@@ -74,7 +74,7 @@ namespace Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
+                if (!UsuarioExists(id))
                 {
                     return NotFound();
                 }
@@ -87,57 +87,57 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Clientes
+        // POST: api/Usuarios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            _context.Usuarios.Add(cliente);
+            _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
+            return CreatedAtAction("GetUsuario", new { id = usuario.Id }, usuario);
         }
 
-        // DELETE: api/Clientes/5
+        // DELETE: api/Usuarios/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente(int id)
+        public async Task<IActionResult> DeleteUsuario(int id)
         {
-            var cliente = await _context.Usuarios.FindAsync(id);
-            if (cliente == null)
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            cliente.IsDeleted = true;
-            _context.Entry(cliente).State = EntityState.Modified;
+            usuario.IsDeleted = true;
+            _context.Entry(usuario).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         [HttpGet("deleteds")]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetDeleteds()
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetDeleteds()
         {
             return await _context.Usuarios.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
         }
 
         [HttpPut("restore/{id}")]
-        public async Task<IActionResult> RestoreCliente(int id)
+        public async Task<IActionResult> RestoreUsuario(int id)
         {
-            var cliente = await _context.Usuarios.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == id);
-            if (cliente == null)
+            var usuario = await _context.Usuarios.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == id);
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            cliente.IsDeleted = false;
-            _context.Entry(cliente).State = EntityState.Modified;
+            usuario.IsDeleted = false;
+            _context.Entry(usuario).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ClienteExists(int id)
+        private bool UsuarioExists(int id)
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }

@@ -30,11 +30,11 @@
         {
             menuStrip1 = new MenuStrip();
             iconMenuItem1 = new ToolStripMenuItem();
-            SubMenuClientesApi = new ToolStripMenuItem();
+            SubMenuUsuariosApi = new ToolStripMenuItem();
             SubMenuEmpleadosApi = new ToolStripMenuItem();
             SubMenuVehiculosApi = new ToolStripMenuItem();
             SubMenuTramitesApi = new ToolStripMenuItem();
-            SubMenuClientesTramitesApi = new ToolStripMenuItem();
+            SubMenuUsuariosTramitesApi = new ToolStripMenuItem();
             SubMenuTurnosApi = new ToolStripMenuItem();
             SubMenuPagosApi = new ToolStripMenuItem();
             iconMenuItem2 = new ToolStripMenuItem();
@@ -53,17 +53,17 @@
             //
             // iconMenuItem1
             //
-            iconMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { SubMenuClientesApi, SubMenuEmpleadosApi, SubMenuVehiculosApi, SubMenuTramitesApi, SubMenuClientesTramitesApi, SubMenuTurnosApi, SubMenuPagosApi });
+            iconMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { SubMenuUsuariosApi, SubMenuEmpleadosApi, SubMenuVehiculosApi, SubMenuTramitesApi, SubMenuUsuariosTramitesApi, SubMenuTurnosApi, SubMenuPagosApi });
             iconMenuItem1.Name = "iconMenuItem1";
             iconMenuItem1.Size = new Size(65, 20);
             iconMenuItem1.Text = "Principal";
             //
-            // SubMenuClientesApi
+            // SubMenuUsuariosApi
             //
-            SubMenuClientesApi.Name = "SubMenuClientesApi";
-            SubMenuClientesApi.Size = new Size(200, 22);
-            SubMenuClientesApi.Text = "Clientes";
-            SubMenuClientesApi.Click += SubMenuClientesApi_Click;
+            SubMenuUsuariosApi.Name = "SubMenuUsuariosApi";
+            SubMenuUsuariosApi.Size = new Size(200, 22);
+            SubMenuUsuariosApi.Text = "Usuarios";
+            SubMenuUsuariosApi.Click += SubMenuUsuariosApi_Click;
             //
             // SubMenuEmpleadosApi
             //
@@ -86,12 +86,12 @@
             SubMenuTramitesApi.Text = "Trámites";
             SubMenuTramitesApi.Click += SubMenuTramitesApi_Click;
             //
-            // SubMenuClientesTramitesApi
+            // SubMenuUsuariosTramitesApi
             //
-            SubMenuClientesTramitesApi.Name = "SubMenuClientesTramitesApi";
-            SubMenuClientesTramitesApi.Size = new Size(200, 22);
-            SubMenuClientesTramitesApi.Text = "Clientes por trámite";
-            SubMenuClientesTramitesApi.Click += SubMenuClientesTramitesApi_Click;
+            SubMenuUsuariosTramitesApi.Name = "SubMenuUsuariosTramitesApi";
+            SubMenuUsuariosTramitesApi.Size = new Size(200, 22);
+            SubMenuUsuariosTramitesApi.Text = "Usuarios por trámite";
+            SubMenuUsuariosTramitesApi.Click += SubMenuUsuariosTramitesApi_Click;
             //
             // SubMenuTurnosApi
             //
@@ -141,11 +141,11 @@
 
         private MenuStrip menuStrip1;
         private ToolStripMenuItem iconMenuItem1;
-        private ToolStripMenuItem SubMenuClientesApi;
+        private ToolStripMenuItem SubMenuUsuariosApi;
         private ToolStripMenuItem SubMenuEmpleadosApi;
         private ToolStripMenuItem SubMenuVehiculosApi;
         private ToolStripMenuItem SubMenuTramitesApi;
-        private ToolStripMenuItem SubMenuClientesTramitesApi;
+        private ToolStripMenuItem SubMenuUsuariosTramitesApi;
         private ToolStripMenuItem SubMenuTurnosApi;
         private ToolStripMenuItem SubMenuPagosApi;
         private ToolStripMenuItem iconMenuItem2;
