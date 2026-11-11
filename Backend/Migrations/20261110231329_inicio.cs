@@ -14,30 +14,8 @@ namespace Backend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "gestoria");
-
-            migrationBuilder.CreateTable(
-                name: "Clientes",
-                schema: "gestoria",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false),
-                    Apellido = table.Column<string>(type: "text", nullable: false),
-                    Dni = table.Column<string>(type: "text", nullable: false),
-                    Telefono = table.Column<string>(type: "text", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Empleados",
-                schema: "gestoria",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -54,8 +32,24 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
+                    Apellido = table.Column<string>(type: "text", nullable: false),
+                    Dni = table.Column<string>(type: "text", nullable: false),
+                    Telefono = table.Column<string>(type: "text", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Vehiculos",
-                schema: "gestoria",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -72,17 +66,15 @@ namespace Backend.Migrations
                 {
                     table.PrimaryKey("PK_Vehiculos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehiculos_Clientes_ClienteId",
+                        name: "FK_Vehiculos_Usuarios_ClienteId",
                         column: x => x.ClienteId,
-                        principalSchema: "gestoria",
-                        principalTable: "Clientes",
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tramites",
-                schema: "gestoria",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -98,7 +90,6 @@ namespace Backend.Migrations
                     table.ForeignKey(
                         name: "FK_Tramites_Vehiculos_VehiculoId",
                         column: x => x.VehiculoId,
-                        principalSchema: "gestoria",
                         principalTable: "Vehiculos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -106,7 +97,6 @@ namespace Backend.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ClientesTramites",
-                schema: "gestoria",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -120,24 +110,21 @@ namespace Backend.Migrations
                 {
                     table.PrimaryKey("PK_ClientesTramites", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClientesTramites_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalSchema: "gestoria",
-                        principalTable: "Clientes",
+                        name: "FK_ClientesTramites_Tramites_TramiteId",
+                        column: x => x.TramiteId,
+                        principalTable: "Tramites",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ClientesTramites_Tramites_TramiteId",
-                        column: x => x.TramiteId,
-                        principalSchema: "gestoria",
-                        principalTable: "Tramites",
+                        name: "FK_ClientesTramites_Usuarios_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Turnos",
-                schema: "gestoria",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -155,14 +142,12 @@ namespace Backend.Migrations
                     table.ForeignKey(
                         name: "FK_Turnos_Empleados_EmpleadoId",
                         column: x => x.EmpleadoId,
-                        principalSchema: "gestoria",
                         principalTable: "Empleados",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Turnos_Tramites_TramiteId",
                         column: x => x.TramiteId,
-                        principalSchema: "gestoria",
                         principalTable: "Tramites",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -170,7 +155,6 @@ namespace Backend.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Pagos",
-                schema: "gestoria",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -188,25 +172,12 @@ namespace Backend.Migrations
                     table.ForeignKey(
                         name: "FK_Pagos_Turnos_TurnoId",
                         column: x => x.TurnoId,
-                        principalSchema: "gestoria",
                         principalTable: "Turnos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
-                schema: "gestoria",
-                table: "Clientes",
-                columns: new[] { "Id", "Apellido", "Dni", "IsDeleted", "Nombre", "Telefono" },
-                values: new object[,]
-                {
-                    { 1, "Pérez", "30111222", false, "Juan", "3415551111" },
-                    { 2, "Gómez", "32444555", false, "Laura", "3415552222" },
-                    { 3, "Díaz", "28777888", false, "Carlos", "3415553333" }
-                });
-
-            migrationBuilder.InsertData(
-                schema: "gestoria",
                 table: "Empleados",
                 columns: new[] { "Id", "Apellido", "Cargo", "IsDeleted", "Nombre", "Telefono" },
                 values: new object[,]
@@ -216,7 +187,16 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "gestoria",
+                table: "Usuarios",
+                columns: new[] { "Id", "Apellido", "Dni", "IsDeleted", "Nombre", "Telefono" },
+                values: new object[,]
+                {
+                    { 1, "Pérez", "30111222", false, "Juan", "3415551111" },
+                    { 2, "Gómez", "32444555", false, "Laura", "3415552222" },
+                    { 3, "Díaz", "28777888", false, "Carlos", "3415553333" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Vehiculos",
                 columns: new[] { "Id", "Anio", "ClienteId", "IsDeleted", "Marca", "Modelo", "Patente", "Tipo" },
                 values: new object[,]
@@ -227,7 +207,6 @@ namespace Backend.Migrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "gestoria",
                 table: "Tramites",
                 columns: new[] { "Id", "Estado", "IsDeleted", "TipoTramite", "VehiculoId" },
                 values: new object[,]
@@ -238,43 +217,36 @@ namespace Backend.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_ClientesTramites_ClienteId",
-                schema: "gestoria",
                 table: "ClientesTramites",
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ClientesTramites_TramiteId",
-                schema: "gestoria",
                 table: "ClientesTramites",
                 column: "TramiteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pagos_TurnoId",
-                schema: "gestoria",
                 table: "Pagos",
                 column: "TurnoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tramites_VehiculoId",
-                schema: "gestoria",
                 table: "Tramites",
                 column: "VehiculoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Turnos_EmpleadoId",
-                schema: "gestoria",
                 table: "Turnos",
                 column: "EmpleadoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Turnos_TramiteId",
-                schema: "gestoria",
                 table: "Turnos",
                 column: "TramiteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehiculos_ClienteId",
-                schema: "gestoria",
                 table: "Vehiculos",
                 column: "ClienteId");
         }
@@ -283,32 +255,25 @@ namespace Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ClientesTramites",
-                schema: "gestoria");
+                name: "ClientesTramites");
 
             migrationBuilder.DropTable(
-                name: "Pagos",
-                schema: "gestoria");
+                name: "Pagos");
 
             migrationBuilder.DropTable(
-                name: "Turnos",
-                schema: "gestoria");
+                name: "Turnos");
 
             migrationBuilder.DropTable(
-                name: "Empleados",
-                schema: "gestoria");
+                name: "Empleados");
 
             migrationBuilder.DropTable(
-                name: "Tramites",
-                schema: "gestoria");
+                name: "Tramites");
 
             migrationBuilder.DropTable(
-                name: "Vehiculos",
-                schema: "gestoria");
+                name: "Vehiculos");
 
             migrationBuilder.DropTable(
-                name: "Clientes",
-                schema: "gestoria");
+                name: "Usuarios");
         }
     }
 }

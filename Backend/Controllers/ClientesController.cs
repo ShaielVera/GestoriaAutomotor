@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +26,7 @@ namespace Backend.Controllers
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes([FromQuery] string filtro="")
         {
             filtro = filtro.ToUpper();
-            return await _context.Clientes
+            return await _context.Usuarios
                 .Where(c => c.Nombre.ToUpper().Contains(filtro) ||
                             c.Apellido.ToUpper().Contains(filtro) ||
                             c.Dni.Contains(filtro))
@@ -39,14 +39,14 @@ namespace Backend.Controllers
         [HttpGet("total")]
         public async Task<ActionResult<int>> GetTotalClientes()
         {
-            return await _context.Clientes.CountAsync(c => !c.IsDeleted);
+            return await _context.Usuarios.CountAsync(c => !c.IsDeleted);
         }
 
         // GET: api/Clientes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
-            var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.Id == id);
+            var cliente = await _context.Usuarios.FirstOrDefaultAsync(c => c.Id == id);
 
             if (cliente == null)
             {
@@ -92,7 +92,7 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
-            _context.Clientes.Add(cliente);
+            _context.Usuarios.Add(cliente);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
@@ -102,7 +102,7 @@ namespace Backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCliente(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.Usuarios.FindAsync(id);
             if (cliente == null)
             {
                 return NotFound();
@@ -118,13 +118,13 @@ namespace Backend.Controllers
         [HttpGet("deleteds")]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetDeleteds()
         {
-            return await _context.Clientes.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
+            return await _context.Usuarios.IgnoreQueryFilters().Where(c => c.IsDeleted).ToListAsync();
         }
 
         [HttpPut("restore/{id}")]
         public async Task<IActionResult> RestoreCliente(int id)
         {
-            var cliente = await _context.Clientes.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == id);
+            var cliente = await _context.Usuarios.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == id);
             if (cliente == null)
             {
                 return NotFound();
@@ -139,7 +139,7 @@ namespace Backend.Controllers
 
         private bool ClienteExists(int id)
         {
-            return _context.Clientes.Any(e => e.Id == id);
+            return _context.Usuarios.Any(e => e.Id == id);
         }
     }
 }

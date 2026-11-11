@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Services.Models;
 
 namespace Backend.Data
@@ -12,7 +12,8 @@ namespace Backend.Data
         public GestoriaContext(DbContextOptions<GestoriaContext> options) : base(options)
         {
         }
-        public DbSet<Cliente> Clientes { get; set; }
+        //la tabla se llama Usuarios porque Clientes ya existe en la base (es la del inventario)
+        public DbSet<Cliente> Usuarios { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Vehiculo> Vehiculos { get; set; }
         public DbSet<Tramite> Tramites { get; set; }
@@ -40,9 +41,6 @@ namespace Backend.Data
         //creamos el método OnModelCreating para configurar el modelo e insertar datos semilla
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //creamos las tablas en el esquema gestoria para que no choquen con las del inventario
-            modelBuilder.HasDefaultSchema("gestoria");
-
             //cargamos datos semilla para la tabla Clientes
             modelBuilder.Entity<Cliente>().HasData(
                 new Cliente { Id = 1, Nombre = "Juan", Apellido = "Pérez", Dni = "30111222", Telefono = "3415551111" },

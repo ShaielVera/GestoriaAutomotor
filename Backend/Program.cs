@@ -22,10 +22,8 @@ internal class Program
 
         var cadenaConexion = configuration.GetConnectionString("postgresRemote");
 
-        //guardamos el historial de migraciones en el esquema gestoria, separado del inventario
         builder.Services.AddDbContext<GestoriaContext>(
-            options => options.UseNpgsql(cadenaConexion,
-                npgsql => npgsql.MigrationsHistoryTable("__EFMigrationsHistory", "gestoria")));
+            options => options.UseNpgsql(cadenaConexion));
 
         // Configurar una política de CORS
         builder.Services.AddCors(options =>

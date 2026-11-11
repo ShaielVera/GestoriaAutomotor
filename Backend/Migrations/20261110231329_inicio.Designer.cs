@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(GestoriaContext))]
-    [Migration("20261110023542_inicio")]
+    [Migration("20261110231329_inicio")]
     partial class inicio
     {
         /// <inheritdoc />
@@ -20,7 +20,6 @@ namespace Backend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("gestoria")
                 .HasAnnotation("ProductVersion", "10.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -55,7 +54,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clientes", "gestoria");
+                    b.ToTable("Usuarios");
 
                     b.HasData(
                         new
@@ -114,7 +113,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("TramiteId");
 
-                    b.ToTable("ClientesTramites", "gestoria");
+                    b.ToTable("ClientesTramites");
                 });
 
             modelBuilder.Entity("Services.Models.Empleado", b =>
@@ -146,7 +145,7 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Empleados", "gestoria");
+                    b.ToTable("Empleados");
 
                     b.HasData(
                         new
@@ -201,7 +200,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("TurnoId");
 
-                    b.ToTable("Pagos", "gestoria");
+                    b.ToTable("Pagos");
                 });
 
             modelBuilder.Entity("Services.Models.Tramite", b =>
@@ -230,7 +229,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("VehiculoId");
 
-                    b.ToTable("Tramites", "gestoria");
+                    b.ToTable("Tramites");
 
                     b.HasData(
                         new
@@ -284,7 +283,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("TramiteId");
 
-                    b.ToTable("Turnos", "gestoria");
+                    b.ToTable("Turnos");
                 });
 
             modelBuilder.Entity("Services.Models.Vehiculo", b =>
@@ -324,7 +323,7 @@ namespace Backend.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.ToTable("Vehiculos", "gestoria");
+                    b.ToTable("Vehiculos");
 
                     b.HasData(
                         new
