@@ -29,6 +29,7 @@ namespace Backend.Controllers
             return await _context.Pagos
                 .Include(p => p.Turno)
                 .ThenInclude(t => t.Tramite)
+                .ThenInclude(tr => tr.Vehiculo)
                 .Where(p => p.MetodoPago.ToUpper().Contains(filtro) ||
                             p.EstadoPago.ToUpper().Contains(filtro))
                 .OrderByDescending(p => p.FechaPago)
@@ -46,7 +47,7 @@ namespace Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Pago>> GetPago(int id)
         {
-            var pago = await _context.Pagos.Include(p => p.Turno).ThenInclude(t => t.Tramite).FirstOrDefaultAsync(p => p.Id == id);
+            var pago = await _context.Pagos.Include(p => p.Turno).ThenInclude(t => t.Tramite).ThenInclude(tr => tr.Vehiculo).FirstOrDefaultAsync(p => p.Id == id);
 
             if (pago == null)
             {
@@ -118,7 +119,7 @@ namespace Backend.Controllers
         [HttpGet("deleteds")]
         public async Task<ActionResult<IEnumerable<Pago>>> GetDeleteds()
         {
-            return await _context.Pagos.IgnoreQueryFilters().Include(p => p.Turno).ThenInclude(t => t.Tramite).Where(p => p.IsDeleted).ToListAsync();
+            return await _context.Pagos.IgnoreQueryFilters().Include(p => p.Turno).ThenInclude(t => t.Tramite).ThenInclude(tr => tr.Vehiculo).Where(p => p.IsDeleted).ToListAsync();
         }
 
         [HttpPut("restore/{id}")]

@@ -15,6 +15,6 @@ namespace Services.Models
 
         public bool IsDeleted { get; set; } = false;
 
-        public override string ToString() => TipoTramite;
+        public override string ToString() => $"{TipoTramite} - {Vehiculo}";
     }
 }

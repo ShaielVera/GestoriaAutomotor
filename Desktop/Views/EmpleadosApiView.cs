@@ -31,6 +31,7 @@ namespace Desktop.Views
             if (empleados != null)
             {
                 dataGridEmpleados.DataSource = empleados;
+                OcultarColumnas();
             }
         }
 
@@ -40,6 +41,7 @@ namespace Desktop.Views
             if (empleados != null)
             {
                 dataGridEmpleados.DataSource = empleados;
+                OcultarColumnas();
             }
         }
 
@@ -113,6 +115,22 @@ namespace Desktop.Views
             tabControl1.SelectedTab = tabPageAgregarEditar;
         }
 
+        private void OcultarColumnas()
+        {
+            // Ocultar las columnas que no queremos mostrar
+            if (dataGridEmpleados.Columns["IsDeleted"] != null)
+                dataGridEmpleados.Columns["IsDeleted"].Visible = false;
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            // si se borra el texto de búsqueda, se vuelven a mostrar todos
+            if (string.IsNullOrWhiteSpace(txtBusqueda.Text))
+            {
+                btnBuscar.PerformClick();
+            }
+        }
+
         private void txtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
         {
             //chequeamos si la tecla presionada es Enter y pulsamos el botón de buscar
@@ -173,6 +191,7 @@ namespace Desktop.Views
             if (empleados != null)
             {
                 dataGridEmpleados.DataSource = empleados;
+                OcultarColumnas();
             }
         }
 

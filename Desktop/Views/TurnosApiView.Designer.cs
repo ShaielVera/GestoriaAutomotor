@@ -167,6 +167,7 @@
             txtBusqueda.Size = new Size(552, 23);
             txtBusqueda.TabIndex = 0;
             txtBusqueda.KeyPress += txtBusqueda_KeyPress;
+            txtBusqueda.TextChanged += txtBusqueda_TextChanged;
             // 
             // tabPageAgregarEditar
             // 

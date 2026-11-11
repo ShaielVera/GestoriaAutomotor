@@ -31,7 +31,9 @@ namespace Desktop.Views
             var usuarios = await usuariosService.GetAllAsync();
             if (usuarios != null)
             {
-                comboUsuarios.DataSource = usuarios;
+                //armamos una lista con el Id y el texto que se va a ver en el combo
+                comboUsuarios.DataSource = usuarios.Select(u => new { u.Id, Descripcion = u.ToString() }).ToList();
+                comboUsuarios.DisplayMember = "Descripcion";
                 comboUsuarios.ValueMember = "Id";
                 comboUsuarios.SelectedIndex = -1;
             }
@@ -43,6 +45,7 @@ namespace Desktop.Views
             if (vehiculos != null)
             {
                 dataGridVehiculos.DataSource = vehiculos;
+                OcultarColumnas();
             }
         }
 
@@ -52,6 +55,7 @@ namespace Desktop.Views
             if (vehiculos != null)
             {
                 dataGridVehiculos.DataSource = vehiculos;
+                OcultarColumnas();
             }
         }
 
@@ -132,6 +136,25 @@ namespace Desktop.Views
             tabControl1.SelectedTab = tabPageAgregarEditar;
         }
 
+        private void OcultarColumnas()
+        {
+            // Ocultar las columnas que no queremos mostrar
+            if (dataGridVehiculos.Columns["UsuarioId"] != null)
+                dataGridVehiculos.Columns["UsuarioId"].Visible = false;
+
+            if (dataGridVehiculos.Columns["IsDeleted"] != null)
+                dataGridVehiculos.Columns["IsDeleted"].Visible = false;
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            // si se borra el texto de búsqueda, se vuelven a mostrar todos
+            if (string.IsNullOrWhiteSpace(txtBusqueda.Text))
+            {
+                btnBuscar.PerformClick();
+            }
+        }
+
         private void txtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
         {
             //chequeamos si la tecla presionada es Enter y pulsamos el botón de buscar
@@ -192,6 +215,7 @@ namespace Desktop.Views
             if (vehiculos != null)
             {
                 dataGridVehiculos.DataSource = vehiculos;
+                OcultarColumnas();
             }
         }
 

@@ -33,7 +33,9 @@ namespace Desktop.Views
             var tramites = await tramitesService.GetAllAsync();
             if (tramites != null)
             {
-                comboTramites.DataSource = tramites;
+                //armamos una lista con el Id y el texto que se va a ver en el combo
+                comboTramites.DataSource = tramites.Select(t => new { t.Id, Descripcion = t.ToString() }).ToList();
+                comboTramites.DisplayMember = "Descripcion";
                 comboTramites.ValueMember = "Id";
                 comboTramites.SelectedIndex = -1;
             }
@@ -44,7 +46,9 @@ namespace Desktop.Views
             var empleados = await empleadosService.GetAllAsync();
             if (empleados != null)
             {
-                comboEmpleados.DataSource = empleados;
+                //armamos una lista con el Id y el texto que se va a ver en el combo
+                comboEmpleados.DataSource = empleados.Select(e => new { e.Id, Descripcion = e.ToString() }).ToList();
+                comboEmpleados.DisplayMember = "Descripcion";
                 comboEmpleados.ValueMember = "Id";
                 comboEmpleados.SelectedIndex = -1;
             }
@@ -56,6 +60,7 @@ namespace Desktop.Views
             if (turnos != null)
             {
                 dataGridTurnos.DataSource = turnos;
+                OcultarColumnas();
             }
         }
 
@@ -65,6 +70,7 @@ namespace Desktop.Views
             if (turnos != null)
             {
                 dataGridTurnos.DataSource = turnos;
+                OcultarColumnas();
             }
         }
 
@@ -143,6 +149,28 @@ namespace Desktop.Views
             tabControl1.SelectedTab = tabPageAgregarEditar;
         }
 
+        private void OcultarColumnas()
+        {
+            // Ocultar las columnas que no queremos mostrar
+            if (dataGridTurnos.Columns["TramiteId"] != null)
+                dataGridTurnos.Columns["TramiteId"].Visible = false;
+
+            if (dataGridTurnos.Columns["EmpleadoId"] != null)
+                dataGridTurnos.Columns["EmpleadoId"].Visible = false;
+
+            if (dataGridTurnos.Columns["IsDeleted"] != null)
+                dataGridTurnos.Columns["IsDeleted"].Visible = false;
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            // si se borra el texto de búsqueda, se vuelven a mostrar todos
+            if (string.IsNullOrWhiteSpace(txtBusqueda.Text))
+            {
+                btnBuscar.PerformClick();
+            }
+        }
+
         private void txtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
         {
             //chequeamos si la tecla presionada es Enter y pulsamos el botón de buscar
@@ -203,6 +231,7 @@ namespace Desktop.Views
             if (turnos != null)
             {
                 dataGridTurnos.DataSource = turnos;
+                OcultarColumnas();
             }
         }
 

@@ -44,6 +44,7 @@ namespace Desktop.Views
             if (tramites != null)
             {
                 dataGridTramites.DataSource = tramites;
+                OcultarColumnas();
             }
         }
 
@@ -53,6 +54,7 @@ namespace Desktop.Views
             if (tramites != null)
             {
                 dataGridTramites.DataSource = tramites;
+                OcultarColumnas();
             }
         }
 
@@ -60,7 +62,7 @@ namespace Desktop.Views
         {
             Tramite tramite = new Tramite
             {
-                TipoTramite = comboTipoTramite.Text,
+                TipoTramite = txtTipoTramite.Text,
                 Estado = comboEstado.Text,
                 VehiculoId = comboVehiculos.SelectedValue != null ? (int)comboVehiculos.SelectedValue : 0
             };
@@ -89,7 +91,7 @@ namespace Desktop.Views
 
         private void ClearTextBox()
         {
-            comboTipoTramite.SelectedIndex = -1;
+            txtTipoTramite.Text = "";
             comboEstado.SelectedIndex = -1;
             comboVehiculos.SelectedIndex = -1;
         }
@@ -116,12 +118,31 @@ namespace Desktop.Views
             }
             tramiteModificado = (Tramite)dataGridTramites.CurrentRow.DataBoundItem;
             //llenamos los campos del formulario con los datos de trámite seleccionado
-            comboTipoTramite.SelectedItem = tramiteModificado.TipoTramite;
+            txtTipoTramite.Text = tramiteModificado.TipoTramite;
             comboEstado.SelectedItem = tramiteModificado.Estado;
             if (tramiteModificado.VehiculoId != 0)
                 comboVehiculos.SelectedValue = tramiteModificado.VehiculoId;
             //cambiamos a la pestaña de agregar/editar
             tabControl1.SelectedTab = tabPageAgregarEditar;
+        }
+
+        private void OcultarColumnas()
+        {
+            // Ocultar las columnas que no queremos mostrar
+            if (dataGridTramites.Columns["VehiculoId"] != null)
+                dataGridTramites.Columns["VehiculoId"].Visible = false;
+
+            if (dataGridTramites.Columns["IsDeleted"] != null)
+                dataGridTramites.Columns["IsDeleted"].Visible = false;
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            // si se borra el texto de búsqueda, se vuelven a mostrar todos
+            if (string.IsNullOrWhiteSpace(txtBusqueda.Text))
+            {
+                btnBuscar.PerformClick();
+            }
         }
 
         private void txtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
@@ -184,6 +205,7 @@ namespace Desktop.Views
             if (tramites != null)
             {
                 dataGridTramites.DataSource = tramites;
+                OcultarColumnas();
             }
         }
 

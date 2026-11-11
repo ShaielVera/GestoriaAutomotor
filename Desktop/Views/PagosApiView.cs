@@ -31,7 +31,9 @@ namespace Desktop.Views
             var turnos = await turnosService.GetAllAsync();
             if (turnos != null)
             {
-                comboTurnos.DataSource = turnos;
+                //armamos una lista con el Id y el texto que se va a ver en el combo
+                comboTurnos.DataSource = turnos.Select(t => new { t.Id, Descripcion = t.ToString() }).ToList();
+                comboTurnos.DisplayMember = "Descripcion";
                 comboTurnos.ValueMember = "Id";
                 comboTurnos.SelectedIndex = -1;
             }
@@ -43,6 +45,7 @@ namespace Desktop.Views
             if (pagos != null)
             {
                 dataGridPagos.DataSource = pagos;
+                OcultarColumnas();
             }
         }
 
@@ -52,6 +55,7 @@ namespace Desktop.Views
             if (pagos != null)
             {
                 dataGridPagos.DataSource = pagos;
+                OcultarColumnas();
             }
         }
 
@@ -129,6 +133,25 @@ namespace Desktop.Views
             tabControl1.SelectedTab = tabPageAgregarEditar;
         }
 
+        private void OcultarColumnas()
+        {
+            // Ocultar las columnas que no queremos mostrar
+            if (dataGridPagos.Columns["TurnoId"] != null)
+                dataGridPagos.Columns["TurnoId"].Visible = false;
+
+            if (dataGridPagos.Columns["IsDeleted"] != null)
+                dataGridPagos.Columns["IsDeleted"].Visible = false;
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            // si se borra el texto de búsqueda, se vuelven a mostrar todos
+            if (string.IsNullOrWhiteSpace(txtBusqueda.Text))
+            {
+                btnBuscar.PerformClick();
+            }
+        }
+
         private void txtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
         {
             //chequeamos si la tecla presionada es Enter y pulsamos el botón de buscar
@@ -189,6 +212,7 @@ namespace Desktop.Views
             if (pagos != null)
             {
                 dataGridPagos.DataSource = pagos;
+                OcultarColumnas();
             }
         }
 

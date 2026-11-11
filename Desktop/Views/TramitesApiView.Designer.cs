@@ -41,7 +41,7 @@
             tabPageAgregarEditar = new TabPage();
             btnCancelar = new Button();
             btnGuardar = new Button();
-            comboTipoTramite = new ComboBox();
+            txtTipoTramite = new TextBox();
             comboEstado = new ComboBox();
             comboVehiculos = new ComboBox();
             label3 = new Label();
@@ -163,12 +163,13 @@
             txtBusqueda.Size = new Size(552, 23);
             txtBusqueda.TabIndex = 0;
             txtBusqueda.KeyPress += txtBusqueda_KeyPress;
+            txtBusqueda.TextChanged += txtBusqueda_TextChanged;
             // 
             // tabPageAgregarEditar
             // 
             tabPageAgregarEditar.Controls.Add(btnCancelar);
             tabPageAgregarEditar.Controls.Add(btnGuardar);
-            tabPageAgregarEditar.Controls.Add(comboTipoTramite);
+            tabPageAgregarEditar.Controls.Add(txtTipoTramite);
             tabPageAgregarEditar.Controls.Add(comboEstado);
             tabPageAgregarEditar.Controls.Add(comboVehiculos);
             tabPageAgregarEditar.Controls.Add(label3);
@@ -221,15 +222,12 @@
             comboEstado.Size = new Size(445, 23);
             comboEstado.TabIndex = 4;
             // 
-            // comboTipoTramite
+            // txtTipoTramite
             // 
-            comboTipoTramite.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboTipoTramite.FormattingEnabled = true;
-            comboTipoTramite.Items.AddRange(new object[] { "Transferencia", "Alta de vehículo", "Baja de vehículo", "Cambio de radicación", "Duplicado de cédula", "Informe de dominio" });
-            comboTipoTramite.Location = new Point(184, 40);
-            comboTipoTramite.Name = "comboTipoTramite";
-            comboTipoTramite.Size = new Size(445, 23);
-            comboTipoTramite.TabIndex = 3;
+            txtTipoTramite.Location = new Point(184, 40);
+            txtTipoTramite.Name = "txtTipoTramite";
+            txtTipoTramite.Size = new Size(445, 23);
+            txtTipoTramite.TabIndex = 3;
             //
             // label3
             //
@@ -291,7 +289,7 @@
         private Button btnBuscar;
         private Button btnRestaurar;
         private Button btnEliminar;
-        private ComboBox comboTipoTramite;
+        private TextBox txtTipoTramite;
         private ComboBox comboEstado;
         private ComboBox comboVehiculos;
         private Label label3;
